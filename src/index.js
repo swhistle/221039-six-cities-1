@@ -5,7 +5,14 @@ import {App} from "./components/app/app.jsx";
 
 const init = () => {
   ReactDOM.render(
-      <App/>,
+      <App rentObjects={
+        [
+          `Wood and stone place`,
+          `Canal View Prinsengracht`,
+          `Nice, cozy, warm big bed apartment`,
+          `Cozy bed apartment`
+        ]
+      }/>,
       document.getElementById(`root`)
   );
 };
