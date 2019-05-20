@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export const App = (props) => {
-  const {rentObjects} = props;
+  const {rentObjects, clickOnCardTitleHandler} = props;
 
   return <main className="page__main page__main--property">
     <section className="property">
@@ -222,7 +222,7 @@ export const App = (props) => {
                 </div>
               </div>
               <h2 className="place-card__name">
-                <a href="#">{rentObjects[0]}</a>
+                <a href="#" onClick={clickOnCardTitleHandler}>{rentObjects[0]}</a>
               </h2>
               <p className="place-card__type">Private room</p>
             </div>
@@ -254,7 +254,7 @@ export const App = (props) => {
                 </div>
               </div>
               <h2 className="place-card__name">
-                <a href="#">{rentObjects[1]}</a>
+                <a href="#" onClick={clickOnCardTitleHandler}>{rentObjects[1]}</a>
               </h2>
               <p className="place-card__type">Apartment</p>
             </div>
@@ -286,7 +286,7 @@ export const App = (props) => {
                 </div>
               </div>
               <h2 className="place-card__name">
-                <a href="#">{rentObjects[2]}</a>
+                <a href="#" onClick={clickOnCardTitleHandler}>{rentObjects[2]}</a>
               </h2>
               <p className="place-card__type">Apartment</p>
             </div>
@@ -318,7 +318,7 @@ export const App = (props) => {
                 </div>
               </div>
               <h2 className="place-card__name">
-                <a href="#">{rentObjects[3]}</a>
+                <a href="#" onClick={clickOnCardTitleHandler}>{rentObjects[3]}</a>
               </h2>
               <p className="place-card__type">Apartment</p>
             </div>
@@ -330,5 +330,6 @@ export const App = (props) => {
 };
 
 App.propTypes = {
-  rentObjects: PropTypes.array.isRequired
+  rentObjects: PropTypes.array.isRequired,
+  clickOnCardTitleHandler: PropTypes.func
 };
