@@ -2,21 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import {App} from "./components/app/app.jsx";
-
-const clickHandler = () => 0;
-
-const rooms = [
-  `Wood and stone place`,
-  `Canal View Prinsengracht`,
-  `Nice, cozy, warm big bed apartment`,
-  `Cozy bed apartment`
-];
+import {offers} from "./mocks/offers";
 
 const init = () => {
   ReactDOM.render(
-      <App
-        rentObjects={rooms}
-        clickOnCardTitleHandler={clickHandler}/>,
+      <App offers={offers}/>,
       document.getElementById(`root`)
   );
 };
