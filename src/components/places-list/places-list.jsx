@@ -1,31 +1,42 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {PlaceCardComponent} from "../place-card/place-card";
+import {PlaceCardComponent} from "../place-card/place-card.jsx";
 
-const clickHandler = (i) => i;
+export class PlacesListComponent extends React.PureComponent {
 
-export const PlacesListComponent = (props) => {
-  const {rentObjects} = props;
+  constructor(props) {
+    super(props);
 
-  return <div className="near-places__list places__list">
-    {rentObjects.map((place, index) =>
-      <PlaceCardComponent
-        key={place.id}
-        index={index}
-        rentObject={place}
-        clickOnCardTitleHandler={clickHandler}/>
-    )}
-  </div>;
-};
+    this.state = {
+      activeCardIndex: -1
+    };
+  }
+
+  render() {
+    const {rentObjects} = this.props;
+
+    const mouseOverCardImgHandler = (index) => {
+      this.setState({activeCardIndex: index});
+    };
+
+    const clickOnCardTitleHandler = (e) => {
+      e.preventDefault();
+    };
+
+    return <div className="near-places__list places__list">
+      {rentObjects.map((place, index) =>
+        <PlaceCardComponent
+          key={place.id}
+          index={index}
+          rentObject={place}
+          isActiveCard={index === this.state.activeCardIndex}
+          mouseOverCardImgHandler={mouseOverCardImgHandler}
+          clickOnCardTitleHandler={clickOnCardTitleHandler}/>
+      )}
+    </div>;
+  }
+}
 
 PlacesListComponent.propTypes = {
-  rentObjects: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
-    type: PropTypes.string,
-    name: PropTypes.string,
-    photoSrc: PropTypes.string,
-    link: PropTypes.string,
-    price: PropTypes.string,
-    rating: PropTypes.number
-  }))
+  rentObjects: PropTypes.array.isRequired
 };

@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export const PlaceCardComponent = (props) => {
-  const {rentObject, index, clickOnCardTitleHandler} = props;
+  const {rentObject, index, isActiveCard, mouseOverCardImgHandler, clickOnCardTitleHandler} = props;
 
   return <article className="near-places__card place-card">
     <div className="near-places__image-wrapper place-card__image-wrapper">
-      <a href="#">
-        <img className="place-card__image" src={rentObject.photoSrc} width="260" height="200" alt="Place image"/>
+      <a href="#" onMouseOver={() => mouseOverCardImgHandler(index)}>
+        <img className={isActiveCard ? `place-card__image active` : `place-card__image`} src={rentObject.photoSrc} width="260" height="200" alt="Place image"/>
       </a>
     </div>
     <div className="place-card__info">
@@ -30,7 +30,7 @@ export const PlaceCardComponent = (props) => {
         </div>
       </div>
       <h2 className="place-card__name">
-        <a href={rentObject.link} onClick={() => clickOnCardTitleHandler(index)}>{rentObject.name}</a>
+        <a href={rentObject.link} onClick={(e) => clickOnCardTitleHandler(e)}>{rentObject.name}</a>
       </h2>
       <p className="place-card__type">{rentObject.type}</p>
     </div>
@@ -48,6 +48,8 @@ PlaceCardComponent.propTypes = {
     rating: PropTypes.number
   }),
   index: PropTypes.number,
+  isActiveCard: PropTypes.bool,
+  mouseOverCardImgHandler: PropTypes.func,
   clickOnCardTitleHandler: PropTypes.func
 };
 

@@ -1,8 +1,8 @@
-import React, {Component} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import {PlacesListComponent} from "../places-list/places-list";
+import {PlacesListComponent} from "../places-list/places-list.jsx";
 
-export class App extends Component {
+export class App extends React.PureComponent {
 
   constructor(props) {
     super(props);
@@ -12,7 +12,7 @@ export class App extends Component {
   }
 
   render() {
-    const {offers} = props;
+    const {offers} = this.props;
 
     return <main className="page__main page__main--property">
       <section className="property">
@@ -106,11 +106,11 @@ export class App extends Component {
                   <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar"/>
                 </div>
                 <span className="property__user-name">
-                Angelina
-              </span>
+                  Angelina
+                </span>
                 <span className="property__user-status">
-                Pro
-              </span>
+                  Pro
+                </span>
               </div>
               <div className="property__description">
                 <p className="property__text">
@@ -132,8 +132,8 @@ export class App extends Component {
                       <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar"/>
                     </div>
                     <span className="reviews__user-name">
-                    Max
-                  </span>
+                      Max
+                    </span>
                   </div>
                   <div className="reviews__info">
                     <div className="reviews__rating rating">
@@ -213,13 +213,5 @@ export class App extends Component {
 }
 
 App.propTypes = {
-  offers: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
-    type: PropTypes.string,
-    name: PropTypes.string,
-    photoSrc: PropTypes.string,
-    link: PropTypes.string,
-    price: PropTypes.string,
-    rating: PropTypes.number
-  })).isRequired
+  offers: PropTypes.array.isRequired
 };
