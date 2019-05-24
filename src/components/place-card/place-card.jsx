@@ -45,7 +45,8 @@ PlaceCardComponent.propTypes = {
     photoSrc: PropTypes.string,
     link: PropTypes.string,
     price: PropTypes.string,
-    rating: PropTypes.number
+    rating: PropTypes.number,
+    coordinates: PropTypes.arrayOf(PropTypes.number)
   }),
   index: PropTypes.number,
   isActiveCard: PropTypes.bool,

@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import {PlacesListComponent} from "../places-list/places-list.jsx";
+import {Map} from "../map/map.jsx";
 
 export class App extends React.PureComponent {
 
@@ -13,6 +15,7 @@ export class App extends React.PureComponent {
 
   render() {
     const {offers} = this.props;
+    const cityCoordinates = offers.map((offer) => offer.coordinates);
 
     return <main className="page__main page__main--property">
       <section className="property">
@@ -200,7 +203,9 @@ export class App extends React.PureComponent {
             </section>
           </div>
         </div>
-        <section className="property__map map"></section>
+        <section className="cities__map map">
+          <Map coordinatesList={cityCoordinates}/>
+        </section>
       </section>
       <div className="container">
         <section className="near-places places">

@@ -10,7 +10,8 @@ const TEST_OFFER = {
   photoSrc: `img/room.jpg`,
   link: ``,
   price: `80`,
-  rating: 4
+  rating: 4,
+  coordinates: [52.3909553943508, 4.85309666406198]
 };
 
 const mouseOverCardImgHandler = () => {};
