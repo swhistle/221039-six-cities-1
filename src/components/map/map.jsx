@@ -9,9 +9,7 @@ export class Map extends React.PureComponent {
   }
 
   _initMap() {
-    const {coordinatesList} = this.props;
-
-    const city = [52.38333, 4.9];
+    const {cityCoordinates, coordinatesList} = this.props;
 
     const icon = leaflet.icon({
       iconUrl: `img/map-pin.svg`,
@@ -20,22 +18,17 @@ export class Map extends React.PureComponent {
 
     const zoom = 12;
     const map = leaflet.map(`map`, {
-      center: city,
+      center: cityCoordinates,
       zoom,
       zoomControl: false,
       marker: true
     });
-    map.setView(city, zoom);
+    map.setView(cityCoordinates, zoom);
 
     leaflet
       .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
         attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
       })
-      .addTo(map);
-
-    const offerCords = [52.3709553943508, 4.89309666406198];
-    leaflet
-      .marker(offerCords, {icon})
       .addTo(map);
 
     coordinatesList.forEach((coordinates) => {
@@ -56,5 +49,6 @@ export class Map extends React.PureComponent {
 
 
 Map.propTypes = {
+  cityCoordinates: PropTypes.array.isRequired,
   coordinatesList: PropTypes.array.isRequired
 };

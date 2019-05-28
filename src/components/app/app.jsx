@@ -1,23 +1,48 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
 
 import {PlacesListComponent} from "../places-list/places-list.jsx";
 import {Map} from "../map/map.jsx";
 
-export class App extends React.PureComponent {
+import {Actions, ActionCreators} from "../../reducer";
 
+class App extends React.PureComponent {
   constructor(props) {
     super(props);
-
-    this.state = {
-    };
   }
 
   render() {
-    const {offers} = this.props;
+    const {offers, cities, cityId} = this.props;
     const cityCoordinates = offers.map((offer) => offer.coordinates);
+    const currentCityCoordinates = cities.find((c) => c.id === cityId) || cities[0];
 
     return <main className="page__main page__main--property">
+      <h1 className="visually-hidden">Cities</h1>
+      <div className="cities tabs">
+        <section className="locations container">
+          <ul className="locations__list tabs__list">
+            {
+              cities.map(cityItem => {
+                return <li key={cityItem.id} className="locations__item">
+                  <a className={cityId === cityItem.id ?
+                    `locations__item-link tabs__item tabs__item--active` :
+                    `locations__item-link tabs__item`}
+                     onClick={(e) => {
+                       e.preventDefault();
+                       this.props.onChangeCity(cityItem.id);
+                     }}>
+                    <span>{cityItem.name}</span>
+                  </a>
+                </li>;
+              })
+            }
+          </ul>
+        </section>
+      </div>
+      <section className="cities__map map">
+        <Map cityCoordinates={currentCityCoordinates.coordinates} coordinatesList={cityCoordinates}/>
+      </section>
       <section className="property">
         <div className="property__gallery-container container">
           <div className="property__gallery">
@@ -203,9 +228,6 @@ export class App extends React.PureComponent {
             </section>
           </div>
         </div>
-        <section className="cities__map map">
-          <Map coordinatesList={cityCoordinates}/>
-        </section>
       </section>
       <div className="container">
         <section className="near-places places">
@@ -218,5 +240,24 @@ export class App extends React.PureComponent {
 }
 
 App.propTypes = {
-  offers: PropTypes.array.isRequired
+  offers: PropTypes.array.isRequired,
+  cities: PropTypes.arrayOf({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    coordinates: PropTypes.arrayOf(PropTypes.number)
+  }).isRequired,
+  cityId: PropTypes.number
 };
+
+const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, state);
+
+const mapDispatchToProps = (dispatch) => ({
+  onChangeCity: (cityId) => {
+    dispatch(ActionCreators[Actions.ChangeCity](cityId));
+  }
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
