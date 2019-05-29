@@ -487,8 +487,12 @@ exports[`App correctly renders 1`] = `
       </div>
     </div>
     <section
-      className="property__map map"
-    />
+      className="cities__map map"
+    >
+      <div
+        id="map"
+      />
+    </section>
   </section>
   <div
     className="container"
