@@ -9,36 +9,51 @@ export class Map extends React.Component {
   }
 
   _initMap() {
-    const {cityCoordinates, coordinatesList} = this.props;
 
-    const icon = leaflet.icon({
+    this.icon = leaflet.icon({
       iconUrl: `img/map-pin.svg`,
       iconSize: [30, 30]
     });
 
-    const zoom = 12;
-    const map = leaflet.map(`map`, {
-      center: cityCoordinates,
-      zoom,
+    this.zoom = 12;
+
+    this.map = leaflet.map(`map`, {
+      center: this.props.cityCoordinates,
+      zoom: this.zoom,
       zoomControl: false,
       marker: true
     });
-    map.setView(cityCoordinates, zoom);
+
+    this._setView();
 
     leaflet
       .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
         attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
       })
-      .addTo(map);
+      .addTo(this.map);
 
-    coordinatesList.forEach((coordinates) => {
-      leaflet
-        .marker(coordinates, {icon})
-        .addTo(map);
-    });
+    this.layerGroup = leaflet.layerGroup().addTo(this.map);
+
+    this._addMarkersToMap();
   }
 
   _updateMap() {
+    this.layerGroup.clearLayers();
+
+    this._setView();
+    this._addMarkersToMap();
+  }
+
+  _addMarkersToMap() {
+    this.props.coordinatesList.forEach((coordinates) => {
+      leaflet
+        .marker(coordinates, this.icon)
+        .addTo(this.layerGroup);
+    });
+  }
+
+  _setView() {
+    this.map.setView(this.props.cityCoordinates, this.zoom);
   }
 
   componentDidMount() {
