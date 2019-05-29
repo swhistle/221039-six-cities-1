@@ -39,7 +39,7 @@ export const PlaceCardComponent = (props) => {
 
 PlaceCardComponent.propTypes = {
   rentObject: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     type: PropTypes.string,
     name: PropTypes.string,
     photoSrc: PropTypes.string,

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import leaflet from "leaflet";
 
-export class Map extends React.PureComponent {
+export class Map extends React.Component {
 
   constructor(props) {
     super(props);
@@ -38,8 +38,19 @@ export class Map extends React.PureComponent {
     });
   }
 
+  _updateMap() {
+  }
+
   componentDidMount() {
     this._initMap();
+  }
+
+  componentDidUpdate() {
+    this._updateMap();
+  }
+
+  shouldComponentUpdate() {
+    return true;
   }
 
   render() {

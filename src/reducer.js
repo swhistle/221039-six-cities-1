@@ -1,6 +1,6 @@
 const initialState = {
   cityId: 1,
-  // offers: []
+  offers: []
 };
 
 const Actions = {
@@ -16,7 +16,15 @@ const ActionCreators = {
         cityId: cityId
       }
     }
-  }
+  },
+  [Actions.GetOffersList]: (offers) => {
+    return {
+      type: Actions.GetOffersList,
+      payload: {
+        offers: offers
+      }
+    }
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -30,7 +38,7 @@ const reducer = (state = initialState, action) => {
     case Actions.GetOffersList:
       return {
         ...state,
-        // offers: action.payload
+        offers: action.payload.offers
       };
   }
 };

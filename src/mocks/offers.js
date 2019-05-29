@@ -1,4 +1,4 @@
-export const offers = [
+export const OFFERS = [
   {
     id: 1,
     cityId: 1,
@@ -232,7 +232,7 @@ export const offers = [
   },
 ];
 
-export const cities = [
+export const CITIES = [
   {
     id: 1,
     name: `Amsterdam`,
