@@ -6,7 +6,8 @@ import {PlaceCardComponent} from "./place-card.jsx";
 Enzyme.configure({adapter: new Adapter()});
 
 const TEST_OFFER = {
-  id: `1`,
+  id: 1,
+  cityId: 1,
   type: `Private room`,
   name: `Wood and stone place`,
   photoSrc: `img/room.jpg`,

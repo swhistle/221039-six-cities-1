@@ -9,15 +9,18 @@ import {OFFERS, CITIES} from "../../mocks/offers";
 import {Actions, ActionCreators} from "../../reducer";
 
 class App extends React.PureComponent {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
+  }
+
+  componentWillMount() {
     this.props.onGetOffers(OFFERS);
   }
 
   render() {
     const {offers, cityId} = this.props;
 
-    if (!!offers) {
+    if (offers) {
       const offersList = offers.filter((item) => item.cityId === cityId);
       const cityCoordinates = offersList.map((offer) => offer.coordinates);
       const currentCityCoordinates = CITIES.find((c) => c.id === cityId);
@@ -28,15 +31,15 @@ class App extends React.PureComponent {
           <section className="locations container">
             <ul className="locations__list tabs__list">
               {
-                CITIES.map(cityItem => {
+                CITIES.map((cityItem) => {
                   return <li key={cityItem.id} className="locations__item">
                     <a className={cityId === cityItem.id ?
                       `locations__item-link tabs__item tabs__item--active` :
                       `locations__item-link tabs__item`}
-                       onClick={(e) => {
-                         e.preventDefault();
-                         this.props.onChangeCity(cityItem.id);
-                       }}>
+                    onClick={(e) => {
+                      e.preventDefault();
+                      this.props.onChangeCity(cityItem.id);
+                    }}>
                       <span>{cityItem.name}</span>
                     </a>
                   </li>;
@@ -139,11 +142,11 @@ class App extends React.PureComponent {
                     <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar"/>
                   </div>
                   <span className="property__user-name">
-                  Angelina
-                </span>
+                    Angelina
+                  </span>
                   <span className="property__user-status">
-                  Pro
-                </span>
+                    Pro
+                  </span>
                 </div>
                 <div className="property__description">
                   <p className="property__text">
@@ -165,8 +168,8 @@ class App extends React.PureComponent {
                         <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar"/>
                       </div>
                       <span className="reviews__user-name">
-                      Max
-                    </span>
+                        Max
+                      </span>
                     </div>
                     <div className="reviews__info">
                       <div className="reviews__rating rating">
@@ -247,25 +250,27 @@ class App extends React.PureComponent {
   }
 }
 
+const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, state);
+
+const mapDispatchToProps = (dispatch) => ({
+  onChangeCity: (cityId) => {
+    dispatch(ActionCreators[Actions.ChangeCity](cityId));
+  },
+  onGetOffers: (offers) => {
+    dispatch(ActionCreators[Actions.GetOffersList](offers));
+  }
+});
+
 App.propTypes = {
-  offers: PropTypes.array.isRequired,
+  offers: PropTypes.array,
   cityId: PropTypes.number,
   onGetOffers: PropTypes.func,
   onChangeCity: PropTypes.func
 };
 
-const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, state);
-
-const mapDispatchToProps = (dispatch) => ({
-  onChangeCity: (cityId) => {
-    dispatch(ActionCreators[Actions.ChangeCity](cityId))
-  },
-  onGetOffers: (offers) => {
-    dispatch(ActionCreators[Actions.GetOffersList](offers))
-  }
-});
+export {App};
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(App);

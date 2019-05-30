@@ -13,33 +13,34 @@ const ActionCreators = {
     return {
       type: Actions.ChangeCity,
       payload: {
-        cityId: cityId
+        cityId
       }
-    }
+    };
   },
   [Actions.GetOffersList]: (offers) => {
     return {
       type: Actions.GetOffersList,
       payload: {
-        offers: offers
+        offers
       }
-    }
+    };
   },
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case Actions.ChangeCity:
-      return {
-        ...state,
+      return Object.assign({}, state, {
         cityId: action.payload.cityId
-      };
+      });
 
     case Actions.GetOffersList:
-      return {
-        ...state,
+      return Object.assign({}, state, {
         offers: action.payload.offers
-      };
+      });
+
+    default:
+      return state;
   }
 };
 

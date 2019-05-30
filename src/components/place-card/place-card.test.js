@@ -5,6 +5,7 @@ import {PlaceCardComponent} from "./place-card.jsx";
 
 const TEST_OFFER = {
   id: 1,
+  cityId: 1,
   type: `Private room`,
   name: `Wood and stone place`,
   photoSrc: `img/room.jpg`,
