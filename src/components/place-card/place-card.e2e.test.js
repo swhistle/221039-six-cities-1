@@ -6,13 +6,15 @@ import {PlaceCardComponent} from "./place-card.jsx";
 Enzyme.configure({adapter: new Adapter()});
 
 const TEST_OFFER = {
-  id: `1`,
+  id: 1,
+  cityId: 1,
   type: `Private room`,
   name: `Wood and stone place`,
   photoSrc: `img/room.jpg`,
   link: ``,
   price: `80`,
-  rating: 4
+  rating: 4,
+  coordinates: [52.3909553943508, 4.85309666406198]
 };
 
 const mouseOverCardImgHandler = jest.fn();

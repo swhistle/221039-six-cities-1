@@ -4,6 +4,102 @@ exports[`App correctly renders 1`] = `
 <main
   className="page__main page__main--property"
 >
+  <h1
+    className="visually-hidden"
+  >
+    Cities
+  </h1>
+  <div
+    className="cities tabs"
+  >
+    <section
+      className="locations container"
+    >
+      <ul
+        className="locations__list tabs__list"
+      >
+        <li
+          className="locations__item"
+        >
+          <a
+            className="locations__item-link tabs__item tabs__item--active"
+            onClick={[Function]}
+          >
+            <span>
+              Amsterdam
+            </span>
+          </a>
+        </li>
+        <li
+          className="locations__item"
+        >
+          <a
+            className="locations__item-link tabs__item"
+            onClick={[Function]}
+          >
+            <span>
+              Barcelona
+            </span>
+          </a>
+        </li>
+        <li
+          className="locations__item"
+        >
+          <a
+            className="locations__item-link tabs__item"
+            onClick={[Function]}
+          >
+            <span>
+              Berlin
+            </span>
+          </a>
+        </li>
+        <li
+          className="locations__item"
+        >
+          <a
+            className="locations__item-link tabs__item"
+            onClick={[Function]}
+          >
+            <span>
+              Paris
+            </span>
+          </a>
+        </li>
+        <li
+          className="locations__item"
+        >
+          <a
+            className="locations__item-link tabs__item"
+            onClick={[Function]}
+          >
+            <span>
+              Prague
+            </span>
+          </a>
+        </li>
+        <li
+          className="locations__item"
+        >
+          <a
+            className="locations__item-link tabs__item"
+            onClick={[Function]}
+          >
+            <span>
+              Roma
+            </span>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </div>
+  <section
+    className="cities__map map"
+  >
+    <div
+      id="map"
+    />
+  </section>
   <section
     className="property"
   >
@@ -486,9 +582,6 @@ exports[`App correctly renders 1`] = `
         </section>
       </div>
     </div>
-    <section
-      className="property__map map"
-    />
   </section>
   <div
     className="container"
