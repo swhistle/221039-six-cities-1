@@ -30,66 +30,6 @@ exports[`App correctly renders 1`] = `
             </span>
           </a>
         </li>
-        <li
-          className="locations__item"
-        >
-          <a
-            className="locations__item-link tabs__item"
-            onClick={[Function]}
-          >
-            <span>
-              Barcelona
-            </span>
-          </a>
-        </li>
-        <li
-          className="locations__item"
-        >
-          <a
-            className="locations__item-link tabs__item"
-            onClick={[Function]}
-          >
-            <span>
-              Berlin
-            </span>
-          </a>
-        </li>
-        <li
-          className="locations__item"
-        >
-          <a
-            className="locations__item-link tabs__item"
-            onClick={[Function]}
-          >
-            <span>
-              Paris
-            </span>
-          </a>
-        </li>
-        <li
-          className="locations__item"
-        >
-          <a
-            className="locations__item-link tabs__item"
-            onClick={[Function]}
-          >
-            <span>
-              Prague
-            </span>
-          </a>
-        </li>
-        <li
-          className="locations__item"
-        >
-          <a
-            className="locations__item-link tabs__item"
-            onClick={[Function]}
-          >
-            <span>
-              Roma
-            </span>
-          </a>
-        </li>
       </ul>
     </section>
   </div>

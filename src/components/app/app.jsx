@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
 import {PlacesListComponent} from "../places-list/places-list.jsx";
+import {CitiesListComponent} from "../cities-list/cities-list.jsx";
 import {Map} from "../map/map.jsx";
 import {OFFERS, CITIES} from "../../mocks/offers";
 
@@ -20,32 +21,33 @@ class App extends React.PureComponent {
   render() {
     const {offers, cityId} = this.props;
 
-    if (offers) {
+    if (offers && offers.length > 0) {
+      const cityIdList = [];
+      offers.forEach((item) => {
+        if (!cityIdList.some((ci) => ci === item.cityId)) {
+          cityIdList.push(item.cityId);
+        }
+      });
+
+      const cityList = cityIdList.map((ci) => CITIES.find((city) => city.id === ci));
+
       const offersList = offers.filter((item) => item.cityId === cityId);
       const cityCoordinates = offersList.map((offer) => offer.coordinates);
-      const currentCityCoordinates = CITIES.find((c) => c.id === cityId);
+      const currentCityCoordinates = cityList.find((c) => c.id === cityId);
+
+      const changeCity = (e, cityID) => {
+        e.preventDefault();
+        this.props.onChangeCity(cityID);
+      };
 
       return <main className="page__main page__main--property">
         <h1 className="visually-hidden">Cities</h1>
         <div className="cities tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              {
-                CITIES.map((cityItem) => {
-                  return <li key={cityItem.id} className="locations__item">
-                    <a className={cityId === cityItem.id ?
-                      `locations__item-link tabs__item tabs__item--active` :
-                      `locations__item-link tabs__item`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      this.props.onChangeCity(cityItem.id);
-                    }}>
-                      <span>{cityItem.name}</span>
-                    </a>
-                  </li>;
-                })
-              }
-            </ul>
+            <CitiesListComponent
+              citiesList={cityList}
+              currentCityId={cityId}
+              clickOnCityHandler={changeCity}/>
           </section>
         </div>
         <section className="cities__map map">
