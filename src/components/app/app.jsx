@@ -9,6 +9,8 @@ import {OFFERS, CITIES} from "../../mocks/offers";
 
 import {Actions, ActionCreators} from "../../reducer";
 
+import {withActiveItem} from "../../hocs/withActiveItem/withActiveItem";
+
 class App extends React.PureComponent {
   constructor() {
     super();
@@ -35,9 +37,11 @@ class App extends React.PureComponent {
       const cityCoordinates = offersList.map((offer) => offer.coordinates);
       const currentCityCoordinates = cityList.find((c) => c.id === cityId);
 
-      const changeCity = (e, cityID) => {
+      const PlacesListComponentWithActiveItem = withActiveItem(PlacesListComponent);
+
+      const changeCity = (e, cityId) => {
         e.preventDefault();
-        this.props.onChangeCity(cityID);
+        this.props.onChangeCity(cityId);
       };
 
       return <main className="page__main page__main--property">
@@ -242,7 +246,7 @@ class App extends React.PureComponent {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlacesListComponent rentObjects={offersList}/>
+            <PlacesListComponentWithActiveItem rentObjects={offersList}/>
           </section>
         </div>
       </main>;
