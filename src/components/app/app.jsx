@@ -2,14 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
-import {PlacesListComponent} from "../places-list/places-list.jsx";
+import PlacesList from "../places-list/places-list.jsx";
 import {CitiesListComponent} from "../cities-list/cities-list.jsx";
 import {Map} from "../map/map.jsx";
 import {OFFERS, CITIES} from "../../mocks/offers";
 
 import {Actions, ActionCreators} from "../../reducer";
-
-import {withActiveItem} from "../../hocs/withActiveItem/withActiveItem";
 
 class App extends React.PureComponent {
   constructor() {
@@ -37,11 +35,9 @@ class App extends React.PureComponent {
       const cityCoordinates = offersList.map((offer) => offer.coordinates);
       const currentCityCoordinates = cityList.find((c) => c.id === cityId);
 
-      const PlacesListComponentWithActiveItem = withActiveItem(PlacesListComponent);
-
-      const changeCity = (e, cityId) => {
+      const changeCity = (e, id) => {
         e.preventDefault();
-        this.props.onChangeCity(cityId);
+        this.props.onChangeCity(id);
       };
 
       return <main className="page__main page__main--property">
@@ -246,7 +242,7 @@ class App extends React.PureComponent {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlacesListComponentWithActiveItem rentObjects={offersList}/>
+            <PlacesList rentObjects={offersList}/>
           </section>
         </div>
       </main>;

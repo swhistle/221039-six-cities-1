@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 export const withActiveItem = (Component) => {
   class WithActiveItem extends React.PureComponent {
@@ -6,20 +7,31 @@ export const withActiveItem = (Component) => {
       super(props);
 
       this.state = {
-        activeItem: -1,
+        activeItemId: this.props.activeItemId
       };
 
-      this.changeActiveItem = (index) => {
-        this.setState({activeItem: index});
+      this.changeActiveItemId = (event) => {
+        let activeItemId = event;
+        if (typeof event === `object`) {
+          activeItemId = +event.currentTarget.id;
+        }
+        this.setState({activeItemId});
       };
     }
 
     render() {
-      const {index = 0} = this.props;
-
-      return <span onClick={() => this.changeActiveItem(index)}><Component {...this.props}/></span>
+      return <Component
+        {...this.props}
+        activeItemId={this.state.activeItemId}
+        changeActiveItemId={this.changeActiveItemId}/>;
     }
   }
 
+  WithActiveItem.propTypes = {
+    activeItemId: PropTypes.number
+  };
+
   return WithActiveItem;
 };
+
+
