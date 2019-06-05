@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
-import {PlacesListComponent} from "../places-list/places-list.jsx";
+import PlacesList from "../places-list/places-list.jsx";
+import {CitiesListComponent} from "../cities-list/cities-list.jsx";
 import {Map} from "../map/map.jsx";
 import {OFFERS, CITIES} from "../../mocks/offers";
 
@@ -11,41 +12,45 @@ import {Actions, ActionCreators} from "../../reducer";
 class App extends React.PureComponent {
   constructor() {
     super();
+
+    this._changeCity = this._changeCity.bind(this);
   }
 
   componentWillMount() {
     this.props.onGetOffers(OFFERS);
   }
 
+  _changeCity(e, id) {
+    e.preventDefault();
+    this.props.onChangeCity(id);
+  }
+
   render() {
     const {offers, cityId} = this.props;
 
-    if (offers) {
+    if (offers && offers.length > 0) {
+      const cityIdList = offers.reduce((acc, item) => {
+        if (!acc.some((ci) => ci === item.cityId)) {
+          return acc.concat(item.cityId);
+        }
+
+        return acc;
+      }, []);
+
+      const cityList = cityIdList.map((ci) => CITIES.find((city) => city.id === ci));
+
       const offersList = offers.filter((item) => item.cityId === cityId);
       const cityCoordinates = offersList.map((offer) => offer.coordinates);
-      const currentCityCoordinates = CITIES.find((c) => c.id === cityId);
+      const currentCityCoordinates = cityList.find((c) => c.id === cityId);
 
       return <main className="page__main page__main--property">
         <h1 className="visually-hidden">Cities</h1>
         <div className="cities tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              {
-                CITIES.map((cityItem) => {
-                  return <li key={cityItem.id} className="locations__item">
-                    <a className={cityId === cityItem.id ?
-                      `locations__item-link tabs__item tabs__item--active` :
-                      `locations__item-link tabs__item`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      this.props.onChangeCity(cityItem.id);
-                    }}>
-                      <span>{cityItem.name}</span>
-                    </a>
-                  </li>;
-                })
-              }
-            </ul>
+            <CitiesListComponent
+              citiesList={cityList}
+              currentCityId={cityId}
+              clickOnCityHandler={this._changeCity}/>
           </section>
         </div>
         <section className="cities__map map">
@@ -240,7 +245,7 @@ class App extends React.PureComponent {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlacesListComponent rentObjects={offersList}/>
+            <PlacesList rentObjects={offersList} activeItemId={0}/>
           </section>
         </div>
       </main>;

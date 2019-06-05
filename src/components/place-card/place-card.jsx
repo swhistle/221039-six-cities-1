@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export const PlaceCardComponent = (props) => {
-  const {rentObject, index, isActiveCard, mouseOverCardImgHandler, clickOnCardTitleHandler} = props;
+  const {rentObject, index, isActiveCard, mouseOverCardImgHandler} = props;
 
   return <article className="near-places__card place-card">
     <div className="near-places__image-wrapper place-card__image-wrapper">
@@ -30,7 +30,7 @@ export const PlaceCardComponent = (props) => {
         </div>
       </div>
       <h2 className="place-card__name">
-        <a href={rentObject.link} onClick={(e) => clickOnCardTitleHandler(e)}>{rentObject.name}</a>
+        <a href={rentObject.link}>{rentObject.name}</a>
       </h2>
       <p className="place-card__type">{rentObject.type}</p>
     </div>
@@ -50,8 +50,7 @@ PlaceCardComponent.propTypes = {
   }),
   index: PropTypes.number,
   isActiveCard: PropTypes.bool,
-  mouseOverCardImgHandler: PropTypes.func,
-  clickOnCardTitleHandler: PropTypes.func
+  mouseOverCardImgHandler: PropTypes.func
 };
 
 

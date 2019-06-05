@@ -30,66 +30,6 @@ exports[`App correctly renders 1`] = `
             </span>
           </a>
         </li>
-        <li
-          className="locations__item"
-        >
-          <a
-            className="locations__item-link tabs__item"
-            onClick={[Function]}
-          >
-            <span>
-              Barcelona
-            </span>
-          </a>
-        </li>
-        <li
-          className="locations__item"
-        >
-          <a
-            className="locations__item-link tabs__item"
-            onClick={[Function]}
-          >
-            <span>
-              Berlin
-            </span>
-          </a>
-        </li>
-        <li
-          className="locations__item"
-        >
-          <a
-            className="locations__item-link tabs__item"
-            onClick={[Function]}
-          >
-            <span>
-              Paris
-            </span>
-          </a>
-        </li>
-        <li
-          className="locations__item"
-        >
-          <a
-            className="locations__item-link tabs__item"
-            onClick={[Function]}
-          >
-            <span>
-              Prague
-            </span>
-          </a>
-        </li>
-        <li
-          className="locations__item"
-        >
-          <a
-            className="locations__item-link tabs__item"
-            onClick={[Function]}
-          >
-            <span>
-              Roma
-            </span>
-          </a>
-        </li>
       </ul>
     </section>
   </div>
@@ -609,7 +549,7 @@ exports[`App correctly renders 1`] = `
             >
               <img
                 alt="Place image"
-                className="place-card__image"
+                className="place-card__image active"
                 height="200"
                 src="img/room.jpg"
                 width="260"
@@ -682,7 +622,6 @@ exports[`App correctly renders 1`] = `
             >
               <a
                 href=""
-                onClick={[Function]}
               >
                 Wood and stone place
               </a>
