@@ -17,7 +17,7 @@ export const withActiveItem = (Component) => {
         activeItemId = +event.currentTarget.id;
       }
       this.setState({activeItemId});
-    };
+    }
 
     render() {
       return <Component

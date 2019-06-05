@@ -29,7 +29,6 @@ it(`hover on rent object image works correctly`, () => {
   );
 
   const rentObjectImg = app.find(`.place-card__image-wrapper a`);
-  const rentObjectHeader = app.find(`.place-card__name a`);
 
   expect(rentObjectImg).toHaveLength(1);
   const firstRentObjectImg = rentObjectImg.first();

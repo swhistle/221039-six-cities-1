@@ -22,12 +22,13 @@ class App extends React.PureComponent {
     const {offers, cityId} = this.props;
 
     if (offers && offers.length > 0) {
-      const cityIdList = [];
-      offers.forEach((item) => {
-        if (!cityIdList.some((ci) => ci === item.cityId)) {
-          cityIdList.push(item.cityId);
+      const cityIdList = offers.reduce((acc, item) => {
+        if (!acc.some((ci) => ci === item.cityId)) {
+          return acc.concat(item.cityId);
         }
-      });
+
+        return acc;
+      }, []);
 
       const cityList = cityIdList.map((ci) => CITIES.find((city) => city.id === ci));
 
