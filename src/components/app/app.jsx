@@ -12,10 +12,17 @@ import {Actions, ActionCreators} from "../../reducer";
 class App extends React.PureComponent {
   constructor() {
     super();
+
+    this._changeCity = this._changeCity.bind(this);
   }
 
   componentWillMount() {
     this.props.onGetOffers(OFFERS);
+  }
+
+  _changeCity(e, id) {
+    e.preventDefault();
+    this.props.onChangeCity(id);
   }
 
   render() {
@@ -36,11 +43,6 @@ class App extends React.PureComponent {
       const cityCoordinates = offersList.map((offer) => offer.coordinates);
       const currentCityCoordinates = cityList.find((c) => c.id === cityId);
 
-      const changeCity = (e, id) => {
-        e.preventDefault();
-        this.props.onChangeCity(id);
-      };
-
       return <main className="page__main page__main--property">
         <h1 className="visually-hidden">Cities</h1>
         <div className="cities tabs">
@@ -48,7 +50,7 @@ class App extends React.PureComponent {
             <CitiesListComponent
               citiesList={cityList}
               currentCityId={cityId}
-              clickOnCityHandler={changeCity}/>
+              clickOnCityHandler={this._changeCity}/>
           </section>
         </div>
         <section className="cities__map map">
