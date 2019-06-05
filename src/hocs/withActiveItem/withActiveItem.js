@@ -7,28 +7,28 @@ export const withActiveItem = (Component) => {
       super(props);
 
       this.state = {
-        activeItemId: this.props.activeItemId
-      };
-
-      this.changeActiveItemId = (event) => {
-        let activeItemId = event;
-        if (typeof event === `object`) {
-          activeItemId = +event.currentTarget.id;
-        }
-        this.setState({activeItemId});
+        activeItemId: props.activeItemId
       };
     }
+
+    _changeActiveItemId(event) {
+      let activeItemId = event;
+      if (typeof event === `object`) {
+        activeItemId = +event.currentTarget.id;
+      }
+      this.setState({activeItemId});
+    };
 
     render() {
       return <Component
         {...this.props}
         activeItemId={this.state.activeItemId}
-        changeActiveItemId={this.changeActiveItemId}/>;
+        changeActiveItemId={this._changeActiveItemId}/>;
     }
   }
 
   WithActiveItem.propTypes = {
-    activeItemId: PropTypes.number
+    activeItemId: PropTypes.number.isRequired
   };
 
   return WithActiveItem;

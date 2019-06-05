@@ -12,10 +12,6 @@ class PlacesListComponent extends React.PureComponent {
   render() {
     const {rentObjects, activeItemId, changeActiveItemId} = this.props;
 
-    this.clickOnCardTitleHandler = (e) => {
-      e.preventDefault();
-    };
-
     return <div className="near-places__list places__list">
       {rentObjects.map((place, index) =>
         <PlaceCardComponent
@@ -23,8 +19,7 @@ class PlacesListComponent extends React.PureComponent {
           index={index}
           rentObject={place}
           isActiveCard={index === activeItemId}
-          mouseOverCardImgHandler={changeActiveItemId}
-          clickOnCardTitleHandler={this.clickOnCardTitleHandler}/>
+          mouseOverCardImgHandler={changeActiveItemId}/>
       )}
     </div>;
   }

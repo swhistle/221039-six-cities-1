@@ -242,7 +242,7 @@ class App extends React.PureComponent {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <PlacesList rentObjects={offersList}/>
+            <PlacesList rentObjects={offersList} activeItemId={0}/>
           </section>
         </div>
       </main>;

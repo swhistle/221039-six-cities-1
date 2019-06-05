@@ -17,8 +17,6 @@ const TEST_OFFER = {
 
 const mouseOverCardImgHandler = () => {};
 
-const clickOnCardTitleHandler = () => {};
-
 it(`PlaceCardComponent correct renders`, () => {
   const placeCard = renderer
     .create(
@@ -26,8 +24,7 @@ it(`PlaceCardComponent correct renders`, () => {
           index={1}
           rentObject={TEST_OFFER}
           isActiveCard={true}
-          mouseOverCardImgHandler={mouseOverCardImgHandler}
-          clickOnCardTitleHandler={clickOnCardTitleHandler}/>
+          mouseOverCardImgHandler={mouseOverCardImgHandler}/>
     ).toJSON();
 
   expect(placeCard).toMatchSnapshot();
