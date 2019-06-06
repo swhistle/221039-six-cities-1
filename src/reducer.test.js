@@ -1,4 +1,6 @@
-import {reducer} from "./reducer";
+import {reducer, Operations, Actions} from "./reducer";
+import {configureAPI} from "./api";
+import MockAdapter from "axios-mock-adapter";
 
 const MOCK_OFFERS = [
   {
@@ -61,4 +63,26 @@ it(`Should get offers`, () => {
     city: undefined,
     offers: MOCK_OFFERS
   });
+});
+
+it(`Should make a correct API call to /hotels`, () => {
+  const dispatch = jest.fn();
+  const api = configureAPI(dispatch);
+  const apiMock = new MockAdapter(api);
+  const offersLoader = Operations.loadOffers();
+
+  apiMock
+    .onGet(`/hotels`)
+    .reply(200, [{fake: true}]);
+
+  return offersLoader(dispatch, jest.fn(), api)
+    .then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenNthCalledWith(1, {
+        type: Actions.GetOffersList,
+        payload: {
+          offers: [{fake: true}]
+        },
+      });
+    });
 });
