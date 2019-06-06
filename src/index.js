@@ -15,11 +15,11 @@ const init = () => {
   const api = configureAPI((...args) => store.dispatch(...args));
 
   const store = createStore(
-    reducer,
-    compose(
-      applyMiddleware(thunk.withExtraArgument(api)),
-      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    )
+      reducer,
+      compose(
+          applyMiddleware(thunk.withExtraArgument(api)),
+          window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+      )
   );
 
   store.dispatch(Operations.loadOffers());

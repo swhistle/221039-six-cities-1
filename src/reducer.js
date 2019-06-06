@@ -6,7 +6,7 @@ const initialState = {
 export const Operations = {
   loadOffers: () => (dispatch, _getState, api) => {
     return api.get(`/hotels`)
-      .then((response) => dispatch(ActionCreators[Actions.GetOffersList](response.data)))
+      .then((response) => dispatch(ActionCreators[Actions.GetOffersList](response.data)));
   }
 };
 

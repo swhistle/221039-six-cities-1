@@ -7,14 +7,10 @@ Enzyme.configure({adapter: new Adapter()});
 
 const TEST_OFFER = {
   id: 1,
-  cityId: 1,
   type: `Private room`,
-  name: `Wood and stone place`,
-  photoSrc: `img/room.jpg`,
-  link: ``,
-  price: `80`,
-  rating: 4,
-  coordinates: [52.3909553943508, 4.85309666406198]
+  title: `Wood and stone place`,
+  price: 80,
+  rating: 4
 };
 
 const mouseOverCardImgHandler = jest.fn();

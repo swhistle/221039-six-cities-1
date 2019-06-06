@@ -42,7 +42,6 @@ PlaceCardComponent.propTypes = {
     id: PropTypes.number,
     type: PropTypes.string,
     title: PropTypes.string,
-    preview_image: PropTypes.string,
     price: PropTypes.number,
     rating: PropTypes.number,
     location: PropTypes.object
