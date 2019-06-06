@@ -7,7 +7,7 @@ export const PlaceCardComponent = (props) => {
   return <article className="near-places__card place-card">
     <div className="near-places__image-wrapper place-card__image-wrapper">
       <a href="#" onMouseOver={() => mouseOverCardImgHandler(index)}>
-        <img className={isActiveCard ? `place-card__image active` : `place-card__image`} src={rentObject.photoSrc} width="260" height="200" alt="Place image"/>
+        <img className={isActiveCard ? `place-card__image active` : `place-card__image`} src={rentObject.preview_image} width="260" height="200" alt="Place image"/>
       </a>
     </div>
     <div className="place-card__info">
@@ -30,7 +30,7 @@ export const PlaceCardComponent = (props) => {
         </div>
       </div>
       <h2 className="place-card__name">
-        <a href={rentObject.link}>{rentObject.name}</a>
+        <a href="">{rentObject.title}</a>
       </h2>
       <p className="place-card__type">{rentObject.type}</p>
     </div>
@@ -41,12 +41,11 @@ PlaceCardComponent.propTypes = {
   rentObject: PropTypes.shape({
     id: PropTypes.number,
     type: PropTypes.string,
-    name: PropTypes.string,
-    photoSrc: PropTypes.string,
-    link: PropTypes.string,
-    price: PropTypes.string,
+    title: PropTypes.string,
+    preview_image: PropTypes.string,
+    price: PropTypes.number,
     rating: PropTypes.number,
-    coordinates: PropTypes.arrayOf(PropTypes.number)
+    location: PropTypes.object
   }),
   index: PropTypes.number,
   isActiveCard: PropTypes.bool,

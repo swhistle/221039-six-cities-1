@@ -5,7 +5,6 @@ import {connect} from "react-redux";
 import PlacesList from "../places-list/places-list.jsx";
 import {CitiesListComponent} from "../cities-list/cities-list.jsx";
 import {Map} from "../map/map.jsx";
-import {OFFERS, CITIES} from "../../mocks/offers";
 
 import {Actions, ActionCreators} from "../../reducer";
 
@@ -16,32 +15,25 @@ class App extends React.PureComponent {
     this._changeCity = this._changeCity.bind(this);
   }
 
-  componentWillMount() {
-    this.props.onGetOffers(OFFERS);
-  }
-
-  _changeCity(e, id) {
+  _changeCity(e, city) {
     e.preventDefault();
-    this.props.onChangeCity(id);
+    this.props.onChangeCity(city);
   }
 
   render() {
-    const {offers, cityId} = this.props;
+    const {offers, currentCity} = this.props;
 
     if (offers && offers.length > 0) {
-      const cityIdList = offers.reduce((acc, item) => {
-        if (!acc.some((ci) => ci === item.cityId)) {
-          return acc.concat(item.cityId);
+      const cityList = offers.reduce((acc, item) => {
+        if (!acc.some((c) => c.name === item.city.name)) {
+          return acc.concat(item.city);
         }
 
         return acc;
       }, []);
 
-      const cityList = cityIdList.map((ci) => CITIES.find((city) => city.id === ci));
-
-      const offersList = offers.filter((item) => item.cityId === cityId);
-      const cityCoordinates = offersList.map((offer) => offer.coordinates);
-      const currentCityCoordinates = cityList.find((c) => c.id === cityId);
+      const offersList = offers.filter((item) => item.city.name === currentCity.name);
+      const offersCoordinates = offersList.map((offer) => [offer.location.latitude, offer.location.longitude]);
 
       return <main className="page__main page__main--property">
         <h1 className="visually-hidden">Cities</h1>
@@ -49,12 +41,12 @@ class App extends React.PureComponent {
           <section className="locations container">
             <CitiesListComponent
               citiesList={cityList}
-              currentCityId={cityId}
+              currentCityName={currentCity.name}
               clickOnCityHandler={this._changeCity}/>
           </section>
         </div>
         <section className="cities__map map">
-          <Map cityCoordinates={currentCityCoordinates.coordinates} coordinatesList={cityCoordinates}/>
+          <Map cityCoordinates={[currentCity.location.latitude, currentCity.location.longitude]} coordinatesList={offersCoordinates}/>
         </section>
         <section className="property">
           <div className="property__gallery-container container">
@@ -255,21 +247,20 @@ class App extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, state);
+const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
+  offers: state.offers,
+  currentCity: state.city
+});
 
 const mapDispatchToProps = (dispatch) => ({
-  onChangeCity: (cityId) => {
-    dispatch(ActionCreators[Actions.ChangeCity](cityId));
-  },
-  onGetOffers: (offers) => {
-    dispatch(ActionCreators[Actions.GetOffersList](offers));
+  onChangeCity: (city) => {
+    dispatch(ActionCreators[Actions.ChangeCity](city));
   }
 });
 
 App.propTypes = {
   offers: PropTypes.array,
-  cityId: PropTypes.number,
-  onGetOffers: PropTypes.func,
+  currentCity: PropTypes.object,
   onChangeCity: PropTypes.func
 };
 

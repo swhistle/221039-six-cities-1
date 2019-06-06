@@ -1,6 +1,13 @@
 const initialState = {
-  cityId: 1,
+  city: null,
   offers: []
+};
+
+export const Operations = {
+  loadOffers: () => (dispatch, _getState, api) => {
+    return api.get(`/hotels`)
+      .then((response) => dispatch(ActionCreators[Actions.GetOffersList](response.data)))
+  }
 };
 
 const Actions = {
@@ -9,11 +16,11 @@ const Actions = {
 };
 
 const ActionCreators = {
-  [Actions.ChangeCity]: (cityId) => {
+  [Actions.ChangeCity]: (city) => {
     return {
       type: Actions.ChangeCity,
       payload: {
-        cityId
+        city
       }
     };
   },
@@ -31,12 +38,13 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case Actions.ChangeCity:
       return Object.assign({}, state, {
-        cityId: action.payload.cityId
+        city: action.payload.city
       });
 
     case Actions.GetOffersList:
       return Object.assign({}, state, {
-        offers: action.payload.offers
+        offers: action.payload.offers,
+        city: action.payload.offers[0].city
       });
 
     default:

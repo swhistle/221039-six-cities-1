@@ -8,17 +8,17 @@ export class CitiesListComponent extends React.PureComponent {
   }
 
   render() {
-    const {citiesList, currentCityId, clickOnCityHandler} = this.props;
+    const {citiesList, currentCityName, clickOnCityHandler} = this.props;
 
     return <ul className="locations__list tabs__list">
       {
         citiesList.map((cityItem) => {
-          return <li key={cityItem.id} className="locations__item">
+          return <li key={cityItem.name} className="locations__item">
             <a
-              className={currentCityId === cityItem.id ?
+              className={currentCityName === cityItem.name ?
                 `locations__item-link tabs__item tabs__item--active` :
                 `locations__item-link tabs__item`}
-              onClick={(e) => clickOnCityHandler(e, cityItem.id)}>
+              onClick={(e) => clickOnCityHandler(e, cityItem)}>
               <span>{cityItem.name}</span>
             </a>
           </li>;
@@ -31,10 +31,9 @@ export class CitiesListComponent extends React.PureComponent {
 CitiesListComponent.propTypes = {
   citiesList: PropTypes.arrayOf(
       PropTypes.shape({
-        id: PropTypes.number,
         name: PropTypes.string,
-        coordinates: PropTypes.arrayOf(PropTypes.number)
+        location: PropTypes.object
       })).isRequired,
-  currentCityId: PropTypes.number,
+  currentCityName: PropTypes.string,
   clickOnCityHandler: PropTypes.func
 };
