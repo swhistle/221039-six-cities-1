@@ -15,14 +15,18 @@ const MOCK_OFFERS = [
 it(`Should return initial state by default`, () => {
   expect(reducer(undefined, {})).toEqual({
     city: null,
-    offers: []
+    offers: [],
+    isAuthorizationRequired: false,
+    user: null
   });
 });
 
 it(`Should change city`, () => {
   expect(reducer({
     city: undefined,
-    offers: []
+    offers: [],
+    isAuthorizationRequired: false,
+    user: null
   }, {
     type: `CHANGE_CITY`,
     payload: {
@@ -45,7 +49,9 @@ it(`Should change city`, () => {
             zoom: 13
           }
         },
-        offers: []
+        offers: [],
+        isAuthorizationRequired: false,
+        user: null
       }
   );
 });
@@ -53,7 +59,9 @@ it(`Should change city`, () => {
 it(`Should get offers`, () => {
   expect(reducer({
     city: undefined,
-    offers: []
+    offers: [],
+    isAuthorizationRequired: false,
+    user: null
   }, {
     type: `GET_OFFERS_LIST`,
     payload: {
@@ -61,7 +69,9 @@ it(`Should get offers`, () => {
     }
   })).toEqual({
     city: undefined,
-    offers: MOCK_OFFERS
+    offers: MOCK_OFFERS,
+    isAuthorizationRequired: false,
+    user: null
   });
 });
 
@@ -82,6 +92,32 @@ it(`Should make a correct API call to /hotels`, () => {
         type: Actions.GetOffersList,
         payload: {
           offers: [{fake: true}]
+        },
+      });
+    });
+});
+
+it(`Should make a correct API call to /login`, () => {
+  const mockSignInData = {
+    email: `user@mail.ru`,
+    password: `123456`
+  };
+  const dispatch = jest.fn();
+  const api = configureAPI(dispatch);
+  const apiMock = new MockAdapter(api);
+  const signIn = Operations.signIn(mockSignInData);
+
+  apiMock
+    .onPost(`/login`, {email: mockSignInData.email, password: mockSignInData.password})
+    .reply(200, [{fake: true}]);
+
+  return signIn(dispatch, jest.fn(), api)
+    .then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenNthCalledWith(1, {
+        type: Actions.SignIn,
+        payload: {
+          signInData: [{fake: true}]
         },
       });
     });
