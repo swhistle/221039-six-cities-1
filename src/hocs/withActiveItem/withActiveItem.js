@@ -9,6 +9,8 @@ export const withActiveItem = (Component) => {
       this.state = {
         activeItemId: props.activeItemId
       };
+
+      this._changeActiveItemId = this._changeActiveItemId.bind(this);
     }
 
     _changeActiveItemId(event) {

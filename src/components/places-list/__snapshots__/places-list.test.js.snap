@@ -18,7 +18,6 @@ exports[`PlacesListComponent correct renders 1`] = `
           alt="Place image"
           className="place-card__image"
           height="200"
-          src="img/room.jpg"
           width="260"
         />
       </a>
@@ -96,7 +95,7 @@ exports[`PlacesListComponent correct renders 1`] = `
       <p
         className="place-card__type"
       >
-        Private room
+        room
       </p>
     </div>
   </article>

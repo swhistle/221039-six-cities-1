@@ -5,20 +5,27 @@ import {App} from './app.jsx';
 const TEST_OFFERS = [
   {
     id: 1,
-    cityId: 1,
+    city: {
+      name: `Cologne`,
+      location: {
+        latitude: 50.938361,
+        longitude: 6.959974,
+        zoom: 13
+      }
+    },
     type: `Private room`,
-    name: `Wood and stone place`,
-    photoSrc: `img/room.jpg`,
-    link: ``,
-    price: `80`,
+    title: `Wood and stone place`,
+    price: 80,
     rating: 4,
-    coordinates: [52.3909553943508, 4.85309666406198]
+    location: {
+      latitude: 50.932361,
+      longitude: 6.960974,
+      zoom: 16
+    }
   }
 ];
 
-const CITY_ID = 1;
-
-const onGetOffers = jest.fn(() => {});
+const CITY = TEST_OFFERS[0].city;
 
 const onChangeCity = jest.fn(() => {});
 
@@ -26,9 +33,8 @@ it(`App correctly renders`, () => {
   const app = renderer
     .create(<App
       offers={TEST_OFFERS}
-      cityId={CITY_ID}
-      onchangecity={onChangeCity}
-      onGetOffers={onGetOffers}
+      currentCity={CITY}
+      onChangeCity={onChangeCity}
     />)
     .toJSON();
 
