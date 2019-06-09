@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {createStore, applyMiddleware} from "redux";
 import {Provider} from "react-redux";
+import {BrowserRouter} from "react-router-dom";
 
 import App from "./components/app/app.jsx";
 import {reducer, Operations} from "./reducer";
@@ -26,7 +27,9 @@ const init = () => {
 
   ReactDOM.render(
       <Provider store={store}>
-        <App/>
+        <BrowserRouter>
+          <App/>
+        </BrowserRouter>
       </Provider>,
       document.getElementById(`root`)
   );
