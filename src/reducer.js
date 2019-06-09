@@ -10,7 +10,7 @@ export const Operations = {
     return api.get(`/hotels`)
       .then((response) => dispatch(ActionCreators[Actions.GetOffersList](response.data)));
   },
-  signIn: (signInData) => (dispatch, _getState, api) => {
+  signIn: (signInData, browserHistory, path) => (dispatch, _getState, api) => {
     return api.post(`/login`, {
       email: signInData.email,
       password: signInData.password
@@ -18,7 +18,7 @@ export const Operations = {
       .then((response) => {
         if (response.status === 200) {
           dispatch(ActionCreators[Actions.SignIn](response.data));
-          history.pushState(null, null, `/`);
+          browserHistory.push(path);
         }
       });
   }

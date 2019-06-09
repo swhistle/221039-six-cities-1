@@ -2,7 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {createStore, applyMiddleware} from "redux";
 import {Provider} from "react-redux";
-import {BrowserRouter} from "react-router-dom";
+import {Router} from "react-router-dom";
+import browserHistory from "./history";
 
 import App from "./components/app/app.jsx";
 import {reducer, Operations} from "./reducer";
@@ -27,9 +28,9 @@ const init = () => {
 
   ReactDOM.render(
       <Provider store={store}>
-        <BrowserRouter>
+        <Router history={browserHistory}>
           <App/>
-        </BrowserRouter>
+        </Router>
       </Provider>,
       document.getElementById(`root`)
   );

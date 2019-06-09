@@ -10,6 +10,8 @@ import {SignInComponent} from "../sign-in/sign-in.jsx";
 
 import {Actions, ActionCreators, Operations} from "../../reducer";
 
+import browserHistory from "../../history";
+
 class App extends React.PureComponent {
   constructor() {
     super();
@@ -70,7 +72,7 @@ class App extends React.PureComponent {
                   <nav className="header__nav">
                     <ul className="header__nav-list">
                       <li className="header__nav-item user">
-                        <Link className="header__nav-link header__nav-link--profile" to="/login" onClick={(e) => this._goToLogIn(e)}>
+                        <Link className="header__nav-link header__nav-link--profile" to="/login">
                           <div className="header__avatar-wrapper user__avatar-wrapper">
                             {
                               userIsLoggedIn ? <img src={`https://es31-server.appspot.com/six-cities${user.avatar_url}`} alt="avatar"/> : ``
@@ -314,7 +316,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(ActionCreators[Actions.ChangeAuthorizationRequirement](isAuthorizationRequired));
   },
   signIn: (signInData) => {
-    dispatch(Operations.signIn(signInData));
+    dispatch(Operations.signIn(signInData, browserHistory, `/`));
   }
 });
 

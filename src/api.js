@@ -1,4 +1,5 @@
 import axios from 'axios';
+import browserHistory from "./history";
 
 export const configureAPI = () => {
   const api = axios.create({
@@ -11,7 +12,7 @@ export const configureAPI = () => {
   const onSuccess = (response) => response;
   const onFail = (err) => {
     if (err.response.status === 403) {
-      history.pushState(null, null, `/login`);
+      browserHistory.push(`/login`);
     }
 
     throw err;
