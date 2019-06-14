@@ -7,6 +7,7 @@ import PlacesList from "../places-list/places-list.jsx";
 import {CitiesListComponent} from "../cities-list/cities-list.jsx";
 import {Map} from "../map/map.jsx";
 import {SignInComponent} from "../sign-in/sign-in.jsx";
+import {OfferComponent} from "../offer/offer.jsx";
 
 import {Actions, ActionCreators, Operations} from "../../reducer";
 
@@ -47,7 +48,7 @@ class App extends React.PureComponent {
     return <Switch>
       <Route path="/login" render={() => <SignInComponent onSubmitHandler={this._onSubmitHandler}/>}/>
 
-      <Route path="/" render={() => {
+      <Route path="/" exact render={() => {
         if (offers && offers.length > 0) {
           const cityList = offers.reduce((acc, item) => {
             if (!acc.some((c) => c.name === item.city.name)) {
@@ -298,6 +299,12 @@ class App extends React.PureComponent {
 
         return null;
       }}/>
+
+      <Route path="/:id" render={() => {
+        const offerId = +browserHistory.location.pathname.replace(`/`, ``);
+
+        return <OfferComponent offer={offers.find((item) => item.id === offerId)}/>;
+      }}/>
     </Switch>;
   }
 }
@@ -305,7 +312,7 @@ class App extends React.PureComponent {
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   offers: state.offers,
   currentCity: state.city,
-  user: state.user,
+  user: state.user
 });
 
 const mapDispatchToProps = (dispatch) => ({
