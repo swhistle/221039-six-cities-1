@@ -30,7 +30,7 @@ export const withActiveItem = (Component) => {
   }
 
   WithActiveItem.propTypes = {
-    activeItemId: PropTypes.number.isRequired
+    activeItemId: PropTypes.number
   };
 
   return WithActiveItem;

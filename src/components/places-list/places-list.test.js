@@ -9,7 +9,12 @@ const TEST_OFFERS = [
     type: `room`,
     title: `Wood and stone place`,
     price: 80,
-    rating: 4
+    rating: 4,
+    location: {
+      longitude: 1,
+      latitude: 1,
+      zoom: 1
+    }
   }
 ];
 

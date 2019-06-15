@@ -12,7 +12,7 @@ class PlacesListComponent extends React.PureComponent {
   render() {
     const {rentObjects, activeItemId, changeActiveItemId} = this.props;
 
-    return <div className="near-places__list places__list">
+    return <React.Fragment>
       {rentObjects.map((place, index) =>
         <PlaceCardComponent
           key={place.id}
@@ -21,7 +21,7 @@ class PlacesListComponent extends React.PureComponent {
           isActiveCard={index === activeItemId}
           mouseOverCardImgHandler={changeActiveItemId}/>
       )}
-    </div>;
+    </React.Fragment>;
   }
 }
 

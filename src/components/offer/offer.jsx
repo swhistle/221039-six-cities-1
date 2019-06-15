@@ -1,5 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {ReviewListComponent} from "../review-list/review-list.jsx";
+import {Map} from "../map/map.jsx";
+import PlacesList from "../places-list/places-list.jsx";
 
 export class OfferComponent extends React.PureComponent {
   constructor(props) {
@@ -7,9 +10,11 @@ export class OfferComponent extends React.PureComponent {
   }
 
   render() {
-    const {offer} = this.props;
+    const {offer, nearPlaces} = this.props;
 
-    if (offer) {
+    if (offer && nearPlaces) {
+      const nearPlacesCoordinates = nearPlaces.map((place) => [place.location.latitude, place.location.longitude]);
+
       return <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
@@ -96,9 +101,21 @@ export class OfferComponent extends React.PureComponent {
                   </p>
                 </div>
               </div>
+              <ReviewListComponent reviewList={[]}/>
             </div>
           </div>
+          <section className="property__map map">
+            <Map cityCoordinates={[offer.location.latitude, offer.location.longitude]} coordinatesList={nearPlacesCoordinates}/>
+          </section>
         </section>
+        <div className="container">
+          <section className="near-places places">
+            <h2 className="near-places__title">Other places in the neighbourhood</h2>
+            <div className="near-places__list places__list">
+              <PlacesList rentObjects={nearPlaces}/>
+            </div>
+          </section>
+        </div>
       </main>;
     }
 
@@ -120,5 +137,6 @@ OfferComponent.propTypes = {
       name: PropTypes.string
     }),
     description: PropTypes.string
-  })
+  }),
+  nearPlaces: PropTypes.array
 };
