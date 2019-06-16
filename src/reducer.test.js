@@ -8,7 +8,12 @@ const MOCK_OFFERS = [
     type: `Private room`,
     title: `Wood and stone place`,
     price: 80,
-    rating: 4
+    rating: 4,
+    location: {
+      latitude: 50.938361,
+      longitude: 6.959974,
+      zoom: 13
+    }
   }
 ];
 
@@ -16,6 +21,7 @@ it(`Should return initial state by default`, () => {
   expect(reducer(undefined, {})).toEqual({
     city: null,
     offers: [],
+    isAuthorizationRequired: false,
     user: null
   });
 });
@@ -24,6 +30,7 @@ it(`Should change city`, () => {
   expect(reducer({
     city: undefined,
     offers: [],
+    isAuthorizationRequired: false,
     user: null
   }, {
     type: `CHANGE_CITY`,
@@ -48,6 +55,7 @@ it(`Should change city`, () => {
           }
         },
         offers: [],
+        isAuthorizationRequired: false,
         user: null
       }
   );
@@ -57,6 +65,7 @@ it(`Should get offers`, () => {
   expect(reducer({
     city: undefined,
     offers: [],
+    isAuthorizationRequired: false,
     user: null
   }, {
     type: `GET_OFFERS_LIST`,
@@ -66,6 +75,7 @@ it(`Should get offers`, () => {
   })).toEqual({
     city: undefined,
     offers: MOCK_OFFERS,
+    isAuthorizationRequired: false,
     user: null
   });
 });

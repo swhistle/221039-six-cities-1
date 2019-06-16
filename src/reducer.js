@@ -18,7 +18,10 @@ export const Operations = {
       .then((response) => {
         if (response.status === 200) {
           dispatch(ActionCreators[Actions.SignIn](response.data));
-          browserHistory.push(path);
+
+          if (browserHistory) {
+            browserHistory.push(path);
+          }
         }
       });
   }

@@ -84,7 +84,8 @@ exports[`PlaceCardComponent correct renders 1`] = `
       className="place-card__name"
     >
       <a
-        href=""
+        href="/1"
+        onClick={[Function]}
       >
         Wood and stone place
       </a>

@@ -41,13 +41,6 @@ export class SignInComponent extends React.PureComponent {
             <button className="login__submit form__submit button" type="submit">Sign in</button>
           </form>
         </section>
-        <section className="locations locations--login locations--current">
-          <div className="locations__item">
-            <a className="locations__item-link" href="#">
-              <span>Amsterdam</span>
-            </a>
-          </div>
-        </section>
       </div>
     </main>;
   }

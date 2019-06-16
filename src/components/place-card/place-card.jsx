@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
 
 export const PlaceCardComponent = (props) => {
   const {rentObject, index, isActiveCard, mouseOverCardImgHandler} = props;
@@ -30,7 +31,7 @@ export const PlaceCardComponent = (props) => {
         </div>
       </div>
       <h2 className="place-card__name">
-        <a href="">{rentObject.title}</a>
+        <Link to={`/${rentObject.id}`}>{rentObject.title}</Link>
       </h2>
       <p className="place-card__type">{rentObject.type}</p>
     </div>
