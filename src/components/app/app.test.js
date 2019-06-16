@@ -1,5 +1,8 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import {Router} from "react-router-dom";
+import browserHistory from "../../history";
+
 import {App} from './app.jsx';
 
 const TEST_OFFERS = [
@@ -31,12 +34,15 @@ const onChangeCity = jest.fn(() => {});
 
 it(`App correctly renders`, () => {
   const app = renderer
-    .create(<App
-      offers={TEST_OFFERS}
-      currentCity={CITY}
-      onChangeCity={onChangeCity}
-    />)
-    .toJSON();
+    .create(
+        <Router history={browserHistory}>
+          <App
+            offers={TEST_OFFERS}
+            currentCity={CITY}
+            onChangeCity={onChangeCity}
+          />
+        </Router>
+    ).toJSON();
 
   expect(app).toMatchSnapshot();
 });

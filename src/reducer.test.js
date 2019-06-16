@@ -65,6 +65,7 @@ it(`Should get offers`, () => {
   expect(reducer({
     city: undefined,
     offers: [],
+    isAuthorizationRequired: false,
     user: null
   }, {
     type: `GET_OFFERS_LIST`,

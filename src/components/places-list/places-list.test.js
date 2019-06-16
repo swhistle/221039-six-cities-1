@@ -1,5 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import {Router} from "react-router-dom";
+import browserHistory from "../../history";
 
 import {PlacesListComponent} from "./places-list.jsx";
 
@@ -21,8 +23,9 @@ const TEST_OFFERS = [
 it(`PlacesListComponent correct renders`, () => {
   const placesList = renderer
     .create(
-        <PlacesListComponent rentObjects={TEST_OFFERS}/>
+        <Router history={browserHistory}>
+          <PlacesListComponent rentObjects={TEST_OFFERS}/>
+        </Router>
     ).toJSON();
-
   expect(placesList).toMatchSnapshot();
 });

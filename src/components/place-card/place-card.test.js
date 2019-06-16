@@ -1,5 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import {Router} from "react-router-dom";
+import browserHistory from "../../history";
 
 import {PlaceCardComponent} from "./place-card.jsx";
 
@@ -21,11 +23,13 @@ const mouseOverCardImgHandler = () => {};
 it(`PlaceCardComponent correct renders`, () => {
   const placeCard = renderer
     .create(
-        <PlaceCardComponent
-          index={1}
-          rentObject={TEST_OFFER}
-          isActiveCard={true}
-          mouseOverCardImgHandler={mouseOverCardImgHandler}/>
+        <Router history={browserHistory}>
+          <PlaceCardComponent
+            index={1}
+            rentObject={TEST_OFFER}
+            isActiveCard={true}
+            mouseOverCardImgHandler={mouseOverCardImgHandler}/>
+        </Router>
     ).toJSON();
 
   expect(placeCard).toMatchSnapshot();

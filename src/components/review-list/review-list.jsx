@@ -11,18 +11,22 @@ export class ReviewListComponent extends React.PureComponent {
   render() {
     const {reviewList} = this.props;
 
-    return <React.Fragment>
-      <section className="property__reviews reviews">
-        <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewList.length}</span></h2>
-        <ul className="reviews__list">
-          <li className="reviews__item">
-            {
-              reviewList.length > 0 ? reviewList.map((reviewItem) => <ReviewItemComponent key={reviewItem.id} review={reviewItem}/>) : ``
-            }
-          </li>
-        </ul>
-      </section>
-    </React.Fragment>;
+    if (reviewList) {
+      return <React.Fragment>
+        <section className="property__reviews reviews">
+          <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewList.length}</span></h2>
+          <ul className="reviews__list">
+            <li className="reviews__item">
+              {
+                reviewList.length > 0 ? reviewList.map((reviewItem) => <ReviewItemComponent key={reviewItem.id} review={reviewItem}/>) : ``
+              }
+            </li>
+          </ul>
+        </section>
+      </React.Fragment>;
+    }
+
+    return null;
   }
 }
 
