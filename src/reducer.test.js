@@ -22,7 +22,8 @@ it(`Should return initial state by default`, () => {
     city: null,
     offers: [],
     isAuthorizationRequired: false,
-    user: null
+    user: null,
+    sortOffersBy: null
   });
 });
 
@@ -31,7 +32,8 @@ it(`Should change city`, () => {
     city: undefined,
     offers: [],
     isAuthorizationRequired: false,
-    user: null
+    user: null,
+    sortOffersBy: null
   }, {
     type: `CHANGE_CITY`,
     payload: {
@@ -56,7 +58,8 @@ it(`Should change city`, () => {
         },
         offers: [],
         isAuthorizationRequired: false,
-        user: null
+        user: null,
+        sortOffersBy: null
       }
   );
 });
@@ -66,7 +69,8 @@ it(`Should get offers`, () => {
     city: undefined,
     offers: [],
     isAuthorizationRequired: false,
-    user: null
+    user: null,
+    sortOffersBy: null
   }, {
     type: `GET_OFFERS_LIST`,
     payload: {
@@ -76,7 +80,8 @@ it(`Should get offers`, () => {
     city: undefined,
     offers: MOCK_OFFERS,
     isAuthorizationRequired: false,
-    user: null
+    user: null,
+    sortOffersBy: null
   });
 });
 
