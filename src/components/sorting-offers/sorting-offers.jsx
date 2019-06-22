@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {withElementIsActive} from "../../hocs/withElementIsActive/withElementIsActive";
 
 const sortingOffersTypes = [`Popular`, `Price: low to high`, `Price: high to low`, `Top rated first`];
 
@@ -9,23 +10,27 @@ class SortingOffersComponent extends React.PureComponent {
   }
 
   render() {
-    const {activeSortingType, changeSorting} = this.props;
+    const {activeSortingType, changeSorting, elementIsActive = false, changeElementIsActive} = this.props;
+    const changeSortingAndHide = (sortingType) => {
+      changeSorting(sortingType);
+      changeElementIsActive(elementIsActive);
+    };
 
     return <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
-      <span className="places__sorting-type" tabIndex="0">
-        Popular
+      <span className="places__sorting-type" tabIndex="0" onClick={() => changeElementIsActive(elementIsActive)}>
+        {activeSortingType || sortingOffersTypes[0]}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className="places__options places__options--custom places__options--opened">
+      <ul className={elementIsActive ? `places__options places__options--custom places__options--opened` : `places__options places__options--custom`}>
         {
           sortingOffersTypes.map((item, index) =>
             <li className={item === activeSortingType || (index === 0 && !activeSortingType) ? `places__option places__option--active` : `places__option`}
               key={`sortingType-${index}`}
               tabIndex="0"
-              onClick={() => changeSorting(item)}>
+              onClick={() => changeSortingAndHide(item)}>
               {item}
             </li>
           )
@@ -44,7 +49,11 @@ class SortingOffersComponent extends React.PureComponent {
 
 SortingOffersComponent.propTypes = {
   activeSortingType: PropTypes.oneOf(sortingOffersTypes),
-  changeSorting: PropTypes.func
+  changeSorting: PropTypes.func,
+  elementIsActive: PropTypes.bool,
+  changeElementIsActive: PropTypes.func
 };
 
 export {SortingOffersComponent, sortingOffersTypes};
+
+export default withElementIsActive(SortingOffersComponent);

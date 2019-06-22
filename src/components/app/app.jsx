@@ -5,7 +5,7 @@ import {Switch, Route, Link} from "react-router-dom";
 
 import PlacesList from "../places-list/places-list.jsx";
 import {CitiesListComponent} from "../cities-list/cities-list.jsx";
-import {SortingOffersComponent} from "../sorting-offers/sorting-offers.jsx";
+import SortingOffers from "../sorting-offers/sorting-offers.jsx";
 import {Map} from "../map/map.jsx";
 import {SignInComponent} from "../sign-in/sign-in.jsx";
 import {OfferComponent} from "../offer/offer.jsx";
@@ -94,7 +94,7 @@ class App extends React.PureComponent {
                     clickOnCityHandler={this._changeCity}/>
                 </section>
               </div>
-              <SortingOffersComponent changeSorting={this._changeSorting} activeSortingType={sortOffersBy}/>
+              <SortingOffers changeSorting={this._changeSorting} activeSortingType={sortOffersBy}/>
               <div className="cities__places-wrapper">
                 <div className="cities__places-container container">
                   <section className="cities__places places">
