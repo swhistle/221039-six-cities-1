@@ -21,6 +21,7 @@ class App extends React.PureComponent {
     this._changeCity = this._changeCity.bind(this);
     this._onSubmitHandler = this._onSubmitHandler.bind(this);
     this._changeSorting = this._changeSorting.bind(this);
+    this._selectOffer = this._selectOffer.bind(this);
   }
 
   _changeCity(e, city) {
@@ -37,8 +38,12 @@ class App extends React.PureComponent {
     this.props.changeOffersSorting(sortingType);
   }
 
+  _selectOffer(offerId) {
+    this.props.selectOffer(offerId);
+  }
+
   render() {
-    const {offers, currentCity, user, sortOffersBy} = this.props;
+    const {offers, currentCity, user, sortOffersBy, selectedOfferId} = this.props;
     const userIsLoggedIn = !!user && !!user.avatar_url;
 
     return <Switch>
@@ -56,6 +61,7 @@ class App extends React.PureComponent {
 
           const offersList = offers.filter((item) => item.city.name === currentCity.name);
           const offersCoordinates = offersList.map((offer) => [offer.location.latitude, offer.location.longitude]);
+          const selectedOffer = offers.find((item) => item.id === selectedOfferId);
 
           return <div>
             <header className="header">
@@ -101,12 +107,12 @@ class App extends React.PureComponent {
                     <h2 className="visually-hidden">Places</h2>
                     <b className="places__found">{offersList.length} places to stay in {currentCity.name}</b>
                     <div className="cities__places-list places__list tabs__content">
-                      <PlacesList rentObjects={offersList} sortOffersBy={sortOffersBy}/>
+                      <PlacesList rentObjects={offersList} sortOffersBy={sortOffersBy} selectOffer={this._selectOffer}/>
                     </div>
                   </section>
                   <div className="cities__right-section">
                     <section className="cities__map map">
-                      <Map cityCoordinates={[currentCity.location.latitude, currentCity.location.longitude]} coordinatesList={offersCoordinates}/>
+                      <Map cityCoordinates={[currentCity.location.latitude, currentCity.location.longitude]} coordinatesList={offersCoordinates} selectedOffer={selectedOffer}/>
                     </section>
                   </div>
                 </div>
@@ -136,6 +142,7 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   currentCity: state.city,
   user: state.user,
   sortOffersBy: state.sortOffersBy,
+  selectedOfferId: state.selectedOfferId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -150,6 +157,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   changeOffersSorting: (sortingType) => {
     dispatch(ActionCreators[Actions.ChangeOffersSorting](sortingType));
+  },
+  selectOffer: (selectedOfferId) => {
+    dispatch(ActionCreators[Actions.SelectOffer](selectedOfferId));
   }
 });
 
@@ -162,6 +172,8 @@ App.propTypes = {
   changeAuthorizationRequirement: PropTypes.func,
   signIn: PropTypes.func,
   changeOffersSorting: PropTypes.func,
+  selectedOfferId: PropTypes.number,
+  selectOffer: PropTypes.func,
 };
 
 export {App};

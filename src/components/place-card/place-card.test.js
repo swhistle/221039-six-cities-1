@@ -18,7 +18,7 @@ const TEST_OFFER = {
   }
 };
 
-const mouseOverCardImgHandler = () => {};
+const clickOnCardImgHandler = () => {};
 
 it(`PlaceCardComponent correct renders`, () => {
   const placeCard = renderer
@@ -28,7 +28,7 @@ it(`PlaceCardComponent correct renders`, () => {
             index={1}
             rentObject={TEST_OFFER}
             isActiveCard={true}
-            mouseOverCardImgHandler={mouseOverCardImgHandler}/>
+            clickOnCardImgHandler={clickOnCardImgHandler}/>
         </Router>
     ).toJSON();
 

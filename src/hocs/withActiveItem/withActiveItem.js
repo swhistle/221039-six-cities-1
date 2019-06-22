@@ -13,12 +13,14 @@ export const withActiveItem = (Component) => {
       this._changeActiveItemId = this._changeActiveItemId.bind(this);
     }
 
-    _changeActiveItemId(event) {
-      let activeItemId = event;
-      if (typeof event === `object`) {
-        activeItemId = +event.currentTarget.id;
+    _changeActiveItemId(event, id) {
+      event.preventDefault();
+      let activeItemId = id;
+      if (typeof id === `object`) {
+        activeItemId = +id.currentTarget.id;
       }
       this.setState({activeItemId});
+      return activeItemId;
     }
 
     render() {

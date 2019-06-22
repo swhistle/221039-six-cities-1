@@ -9,7 +9,7 @@ exports[`PlaceCardComponent correct renders 1`] = `
   >
     <a
       href="#"
-      onMouseOver={[Function]}
+      onClick={[Function]}
     >
       <img
         alt="Place image"

@@ -8,10 +8,17 @@ class PlacesListComponent extends React.PureComponent {
 
   constructor(props) {
     super(props);
+
+    this._changeActiveItem = this._changeActiveItem.bind(this);
+  }
+
+  _changeActiveItem(e, offerId) {
+    this.props.changeActiveItemId(e, offerId);
+    this.props.selectOffer(offerId);
   }
 
   render() {
-    const {rentObjects, activeItemId, sortOffersBy, changeActiveItemId} = this.props;
+    const {rentObjects, activeItemId, sortOffersBy} = this.props;
 
     const sortBy = (one, two) => {
       if (one < two) {
@@ -51,8 +58,8 @@ class PlacesListComponent extends React.PureComponent {
             key={place.id}
             index={index}
             rentObject={place}
-            isActiveCard={index === activeItemId}
-            mouseOverCardImgHandler={changeActiveItemId}/>
+            isActiveCard={place.id === activeItemId}
+            clickOnCardImgHandler={this._changeActiveItem}/>
         )
       }
     </React.Fragment>;
@@ -63,7 +70,8 @@ PlacesListComponent.propTypes = {
   rentObjects: PropTypes.array.isRequired,
   activeItemId: PropTypes.number,
   sortOffersBy: PropTypes.oneOf(sortingOffersTypes),
-  changeActiveItemId: PropTypes.func
+  changeActiveItemId: PropTypes.func,
+  selectOffer: PropTypes.func
 };
 
 export {PlacesListComponent};

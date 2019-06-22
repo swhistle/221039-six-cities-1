@@ -210,7 +210,7 @@ exports[`App correctly renders 1`] = `
               >
                 <a
                   href="#"
-                  onMouseOver={[Function]}
+                  onClick={[Function]}
                 >
                   <img
                     alt="Place image"
