@@ -22,7 +22,9 @@ it(`Should return initial state by default`, () => {
     city: null,
     offers: [],
     isAuthorizationRequired: false,
-    user: null
+    user: null,
+    sortOffersBy: null,
+    selectedOfferId: null,
   });
 });
 
@@ -31,7 +33,9 @@ it(`Should change city`, () => {
     city: undefined,
     offers: [],
     isAuthorizationRequired: false,
-    user: null
+    user: null,
+    sortOffersBy: null,
+    selectedOfferId: null,
   }, {
     type: `CHANGE_CITY`,
     payload: {
@@ -56,27 +60,79 @@ it(`Should change city`, () => {
         },
         offers: [],
         isAuthorizationRequired: false,
-        user: null
+        user: null,
+        sortOffersBy: null,
+        selectedOfferId: null,
       }
   );
 });
 
-it(`Should get offers`, () => {
+it(`Should sort offers`, () => {
   expect(reducer({
     city: undefined,
-    offers: [],
+    offers: MOCK_OFFERS,
     isAuthorizationRequired: false,
-    user: null
+    user: null,
+    sortOffersBy: null,
+    selectedOfferId: null,
   }, {
-    type: `GET_OFFERS_LIST`,
+    type: `CHANGE_OFFERS_SORTING`,
     payload: {
-      offers: MOCK_OFFERS
+      sortingType: `Popular`
     }
   })).toEqual({
     city: undefined,
     offers: MOCK_OFFERS,
     isAuthorizationRequired: false,
-    user: null
+    user: null,
+    sortOffersBy: `Popular`,
+    selectedOfferId: null,
+  });
+});
+
+it(`Should select offer`, () => {
+  expect(reducer({
+    city: undefined,
+    offers: MOCK_OFFERS,
+    isAuthorizationRequired: false,
+    user: null,
+    sortOffersBy: null,
+    selectedOfferId: null,
+  }, {
+    type: `SELECT_OFFER`,
+    payload: {
+      selectedOfferId: MOCK_OFFERS.id
+    }
+  })).toEqual({
+    city: undefined,
+    offers: MOCK_OFFERS,
+    isAuthorizationRequired: false,
+    user: null,
+    sortOffersBy: null,
+    selectedOfferId: MOCK_OFFERS.id,
+  });
+});
+
+it(`Should select offer`, () => {
+  expect(reducer({
+    city: undefined,
+    offers: MOCK_OFFERS,
+    isAuthorizationRequired: false,
+    user: null,
+    sortOffersBy: null,
+    selectedOfferId: null,
+  }, {
+    type: `SELECT_OFFER`,
+    payload: {
+      selectedOfferId: MOCK_OFFERS.id
+    }
+  })).toEqual({
+    city: undefined,
+    offers: MOCK_OFFERS,
+    isAuthorizationRequired: false,
+    user: null,
+    sortOffersBy: null,
+    selectedOfferId: MOCK_OFFERS.id,
   });
 });
 

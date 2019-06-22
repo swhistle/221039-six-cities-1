@@ -9,9 +9,13 @@ export class Map extends React.Component {
   }
 
   _initMap() {
-
     this.icon = leaflet.icon({
-      iconUrl: `img/map-pin.svg`,
+      iconUrl: `/img/map-pin.svg`,
+      iconSize: [30, 30]
+    });
+
+    this.activeIcon = leaflet.icon({
+      iconUrl: `/img/map-pin-active.svg`,
       iconSize: [30, 30]
     });
 
@@ -56,12 +60,26 @@ export class Map extends React.Component {
     this.map.setView(this.props.cityCoordinates, this.zoom);
   }
 
+  _addActiveMarkerToMap() {
+    const selectedOfferCoordinates = [this.props.selectedOffer.location.latitude, this.props.selectedOffer.location.longitude];
+    leaflet
+      .marker(selectedOfferCoordinates, this.activeIcon)
+      .addTo(this.layerGroup);
+  }
+
   componentDidMount() {
     this._initMap();
   }
 
-  componentDidUpdate() {
-    this._updateMap();
+  componentDidUpdate(prevProps) {
+    if (!Object.is(this.props.cityCoordinates, prevProps.cityCoordinates) &&
+      !Object.is(this.props.coordinatesList, prevProps.coordinatesList)) {
+      this._updateMap();
+    }
+
+    if (!Object.is(this.props.selectedOffer, prevProps.selectedOffer)) {
+      this._addActiveMarkerToMap();
+    }
   }
 
   shouldComponentUpdate() {
@@ -76,5 +94,6 @@ export class Map extends React.Component {
 
 Map.propTypes = {
   cityCoordinates: PropTypes.array.isRequired,
-  coordinatesList: PropTypes.array.isRequired
+  coordinatesList: PropTypes.array.isRequired,
+  selectedOffer: PropTypes.object
 };

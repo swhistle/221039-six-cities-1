@@ -18,21 +18,21 @@ const TEST_OFFER = {
   }
 };
 
-const mouseOverCardImgHandler = jest.fn();
+const clickOnCardImgHandler = jest.fn();
 
-it(`hover on rent object image works correctly`, () => {
+it(`click on rent object image works correctly`, () => {
   const app = shallow(
       <PlaceCardComponent
         index={1}
         rentObject={TEST_OFFER}
         isActiveCard={true}
-        mouseOverCardImgHandler={mouseOverCardImgHandler}/>
+        clickOnCardImgHandler={clickOnCardImgHandler}/>
   );
 
   const rentObjectImg = app.find(`.place-card__image-wrapper a`);
 
   expect(rentObjectImg).toHaveLength(1);
   const firstRentObjectImg = rentObjectImg.first();
-  firstRentObjectImg.simulate(`mouseover`);
-  expect(mouseOverCardImgHandler).toHaveBeenCalledTimes(1);
+  firstRentObjectImg.simulate(`click`);
+  expect(clickOnCardImgHandler).toHaveBeenCalledTimes(1);
 });

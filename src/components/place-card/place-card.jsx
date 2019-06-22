@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 
 export const PlaceCardComponent = (props) => {
-  const {rentObject, index, isActiveCard, mouseOverCardImgHandler} = props;
+  const {rentObject, isActiveCard, clickOnCardImgHandler} = props;
 
   return <article className="near-places__card place-card">
     <div className="near-places__image-wrapper place-card__image-wrapper">
-      <a href="#" onMouseOver={() => mouseOverCardImgHandler(index)}>
+      <a href="#" onClick={(e) => clickOnCardImgHandler(e, rentObject.id)}>
         <img className={isActiveCard ? `place-card__image active` : `place-card__image`} src={rentObject.preview_image} width="260" height="200" alt="Place image"/>
       </a>
     </div>
@@ -47,9 +47,8 @@ PlaceCardComponent.propTypes = {
     rating: PropTypes.number,
     location: PropTypes.object
   }),
-  index: PropTypes.number,
   isActiveCard: PropTypes.bool,
-  mouseOverCardImgHandler: PropTypes.func
+  clickOnCardImgHandler: PropTypes.func
 };
 
 

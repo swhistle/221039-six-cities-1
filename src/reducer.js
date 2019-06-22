@@ -2,7 +2,9 @@ const initialState = {
   city: null,
   offers: [],
   isAuthorizationRequired: false,
-  user: null
+  user: null,
+  sortOffersBy: null,
+  selectedOfferId: null,
 };
 
 export const Operations = {
@@ -32,6 +34,8 @@ const Actions = {
   GetOffersList: `GET_OFFERS_LIST`,
   ChangeAuthorizationRequirement: `CHANGE_AUTHORIZATION_REQUIREMENT`,
   SignIn: `SIGN_IN`,
+  ChangeOffersSorting: `CHANGE_OFFERS_SORTING`,
+  SelectOffer: `SELECT_OFFER`,
 };
 
 const ActionCreators = {
@@ -66,6 +70,22 @@ const ActionCreators = {
         signInData
       }
     };
+  },
+  [Actions.ChangeOffersSorting]: (sortingType) => {
+    return {
+      type: Actions.ChangeOffersSorting,
+      payload: {
+        sortingType
+      }
+    };
+  },
+  [Actions.SelectOffer]: (selectedOfferId) => {
+    return {
+      type: Actions.SelectOffer,
+      payload: {
+        selectedOfferId
+      }
+    };
   }
 };
 
@@ -91,6 +111,16 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         user: action.payload.signInData,
         isAuthorizationRequired: false
+      });
+
+    case Actions.ChangeOffersSorting:
+      return Object.assign({}, state, {
+        sortOffersBy: action.payload.sortingType
+      });
+
+    case Actions.SelectOffer:
+      return Object.assign({}, state, {
+        selectedOfferId: action.payload.selectedOfferId
       });
 
     default:

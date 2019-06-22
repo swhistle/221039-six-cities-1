@@ -5,6 +5,7 @@ import {Switch, Route, Link} from "react-router-dom";
 
 import PlacesList from "../places-list/places-list.jsx";
 import {CitiesListComponent} from "../cities-list/cities-list.jsx";
+import SortingOffers from "../sorting-offers/sorting-offers.jsx";
 import {Map} from "../map/map.jsx";
 import {SignInComponent} from "../sign-in/sign-in.jsx";
 import {OfferComponent} from "../offer/offer.jsx";
@@ -19,6 +20,8 @@ class App extends React.PureComponent {
 
     this._changeCity = this._changeCity.bind(this);
     this._onSubmitHandler = this._onSubmitHandler.bind(this);
+    this._changeSorting = this._changeSorting.bind(this);
+    this._selectOffer = this._selectOffer.bind(this);
   }
 
   _changeCity(e, city) {
@@ -31,8 +34,16 @@ class App extends React.PureComponent {
     this.props.signIn(signInData);
   }
 
+  _changeSorting(sortingType) {
+    this.props.changeOffersSorting(sortingType);
+  }
+
+  _selectOffer(offerId) {
+    this.props.selectOffer(offerId);
+  }
+
   render() {
-    const {offers, currentCity, user} = this.props;
+    const {offers, currentCity, user, sortOffersBy, selectedOfferId} = this.props;
     const userIsLoggedIn = !!user && !!user.avatar_url;
 
     return <Switch>
@@ -50,6 +61,7 @@ class App extends React.PureComponent {
 
           const offersList = offers.filter((item) => item.city.name === currentCity.name);
           const offersCoordinates = offersList.map((offer) => [offer.location.latitude, offer.location.longitude]);
+          const selectedOffer = offers.find((item) => item.id === selectedOfferId);
 
           return <div>
             <header className="header">
@@ -88,18 +100,19 @@ class App extends React.PureComponent {
                     clickOnCityHandler={this._changeCity}/>
                 </section>
               </div>
+              <SortingOffers changeSorting={this._changeSorting} activeSortingType={sortOffersBy}/>
               <div className="cities__places-wrapper">
                 <div className="cities__places-container container">
                   <section className="cities__places places">
                     <h2 className="visually-hidden">Places</h2>
                     <b className="places__found">{offersList.length} places to stay in {currentCity.name}</b>
                     <div className="cities__places-list places__list tabs__content">
-                      <PlacesList rentObjects={offersList}/>
+                      <PlacesList rentObjects={offersList} sortOffersBy={sortOffersBy} selectOffer={this._selectOffer}/>
                     </div>
                   </section>
                   <div className="cities__right-section">
                     <section className="cities__map map">
-                      <Map cityCoordinates={[currentCity.location.latitude, currentCity.location.longitude]} coordinatesList={offersCoordinates}/>
+                      <Map cityCoordinates={[currentCity.location.latitude, currentCity.location.longitude]} coordinatesList={offersCoordinates} selectedOffer={selectedOffer}/>
                     </section>
                   </div>
                 </div>
@@ -127,7 +140,9 @@ class App extends React.PureComponent {
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   offers: state.offers,
   currentCity: state.city,
-  user: state.user
+  user: state.user,
+  sortOffersBy: state.sortOffersBy,
+  selectedOfferId: state.selectedOfferId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -139,6 +154,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   signIn: (signInData) => {
     dispatch(Operations.signIn(signInData, browserHistory, `/`));
+  },
+  changeOffersSorting: (sortingType) => {
+    dispatch(ActionCreators[Actions.ChangeOffersSorting](sortingType));
+  },
+  selectOffer: (selectedOfferId) => {
+    dispatch(ActionCreators[Actions.SelectOffer](selectedOfferId));
   }
 });
 
@@ -146,9 +167,13 @@ App.propTypes = {
   offers: PropTypes.array,
   currentCity: PropTypes.object,
   user: PropTypes.object,
+  sortOffersBy: PropTypes.string,
   onChangeCity: PropTypes.func,
   changeAuthorizationRequirement: PropTypes.func,
-  signIn: PropTypes.func
+  signIn: PropTypes.func,
+  changeOffersSorting: PropTypes.func,
+  selectedOfferId: PropTypes.number,
+  selectOffer: PropTypes.func,
 };
 
 export {App};
