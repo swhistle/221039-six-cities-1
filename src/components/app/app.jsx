@@ -23,6 +23,7 @@ class App extends React.PureComponent {
     this._onSubmitHandler = this._onSubmitHandler.bind(this);
     this._changeSorting = this._changeSorting.bind(this);
     this._selectOffer = this._selectOffer.bind(this);
+    this._onSubmitReviewFormHandler = this._onSubmitReviewFormHandler.bind(this);
   }
 
   _changeCity(e, city) {
@@ -43,9 +44,13 @@ class App extends React.PureComponent {
     this.props.selectOffer(offerId);
   }
 
+  _onSubmitReviewFormHandler(review, hotelId) {
+    this.props.sendReview(review, hotelId);
+  }
+
   render() {
     const {offers, currentCity, user, sortOffersBy, selectedOfferId} = this.props;
-    const userIsLoggedIn = !!user && !!user.avatar_url;
+    const userIsLoggedIn = !!user && !!user.avatar_url && !!user.id;
 
     return <Switch>
       <Route path="/login" render={() => <SignInComponent onSubmitHandler={this._onSubmitHandler}/>}/>
@@ -141,7 +146,7 @@ class App extends React.PureComponent {
             .filter((item) => item.city.name === currentOffer.city.name)
             .slice(0, 3);
 
-          return <OfferComponent offer={currentOffer} nearPlaces={nearPlaces}/>;
+          return <OfferComponent offer={currentOffer} nearPlaces={nearPlaces} onSubmitReviewFormHandler={this._onSubmitReviewFormHandler} userIsLoggedIn={userIsLoggedIn}/>;
         }
 
         return null;
@@ -173,6 +178,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   selectOffer: (selectedOfferId) => {
     dispatch(ActionCreators[Actions.SelectOffer](selectedOfferId));
+  },
+  sendReview: (review, hotelId) => {
+    dispatch(Operations.sendReview(review, hotelId));
   }
 });
 
@@ -187,6 +195,7 @@ App.propTypes = {
   changeOffersSorting: PropTypes.func,
   selectedOfferId: PropTypes.number,
   selectOffer: PropTypes.func,
+  sendReview: PropTypes.func,
 };
 
 export {App};

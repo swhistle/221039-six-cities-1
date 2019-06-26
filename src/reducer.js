@@ -26,6 +26,17 @@ export const Operations = {
           }
         }
       });
+  },
+  sendReview: (review, hotelId) => (dispatch, _getState, api) => {
+    return api.post(`/comments/${hotelId}`, {
+      rating: review.rating,
+      comment: review.comment
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          api.get(`/comments/${hotelId}`);
+        }
+      });
   }
 };
 
@@ -36,6 +47,7 @@ const Actions = {
   SignIn: `SIGN_IN`,
   ChangeOffersSorting: `CHANGE_OFFERS_SORTING`,
   SelectOffer: `SELECT_OFFER`,
+  SendReview: `SEND_REVIEW`,
 };
 
 const ActionCreators = {

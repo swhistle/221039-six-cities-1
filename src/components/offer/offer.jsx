@@ -1,6 +1,8 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {ReviewListComponent} from "../review-list/review-list.jsx";
+import ReviewForm from "../review-form/review-form.jsx";
 import {Map} from "../map/map.jsx";
 import PlacesList from "../places-list/places-list.jsx";
 
@@ -10,7 +12,7 @@ export class OfferComponent extends React.PureComponent {
   }
 
   render() {
-    const {offer, nearPlaces} = this.props;
+    const {offer, nearPlaces, onSubmitReviewFormHandler, userIsLoggedIn} = this.props;
 
     if (offer && nearPlaces) {
       const nearPlacesCoordinates = nearPlaces.map((place) => [place.location.latitude, place.location.longitude]);
@@ -102,6 +104,16 @@ export class OfferComponent extends React.PureComponent {
                 </div>
               </div>
               <ReviewListComponent reviewList={[]}/>
+              {
+                !userIsLoggedIn ?
+                  <ReviewForm hotelId={offer.id} onSubmitHandler={onSubmitReviewFormHandler} userIsLoggedIn={userIsLoggedIn}/> :
+                  <div>
+                    <span>Only registered users can write reviews. </span>
+                    <Link to="/login">
+                      <span className="offer-sign-in">Sign in</span>
+                    </Link>
+                  </div>
+              }
             </div>
           </div>
           <section className="property__map map">
@@ -138,5 +150,7 @@ OfferComponent.propTypes = {
     }),
     description: PropTypes.string
   }),
-  nearPlaces: PropTypes.array
+  nearPlaces: PropTypes.array,
+  onSubmitReviewFormHandler: PropTypes.func,
+  userIsLoggedIn: PropTypes.bool,
 };
