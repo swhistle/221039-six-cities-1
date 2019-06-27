@@ -17,8 +17,8 @@ export class ReviewListComponent extends React.PureComponent {
           <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewList.length}</span></h2>
           <ul className="reviews__list">
             {
-              reviewList.length > 0 ? reviewList.map((reviewItem) => <li className="reviews__item">
-                <ReviewItemComponent key={reviewItem.id} review={reviewItem}/>
+              reviewList.length > 0 ? reviewList.map((reviewItem) => <li key={`review-${reviewItem.id}`} className="reviews__item">
+                <ReviewItemComponent review={reviewItem}/>
               </li>) : ``
             }
           </ul>

@@ -224,6 +224,7 @@ App.propTypes = {
   loadReviewList: PropTypes.func,
   currentOfferId: PropTypes.number,
   changeCurrentOffer: PropTypes.func,
+  reviewList: PropTypes.array,
 };
 
 export {App};

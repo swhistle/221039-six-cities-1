@@ -18,10 +18,12 @@ const TEST_OFFER = {
   description: `description`
 };
 
+const loadReviewList = jest.fn(() => {});
+
 it(`OfferComponent correct renders`, () => {
   const offer = renderer
     .create(
-        <OfferComponent offer={TEST_OFFER}/>
+        <OfferComponent offer={TEST_OFFER} loadReviewList={loadReviewList}/>
     ).toJSON();
 
   expect(offer).toMatchSnapshot();

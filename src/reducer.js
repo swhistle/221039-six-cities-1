@@ -33,7 +33,7 @@ export const Operations = {
     return api.get(`/comments/${hotelId}`)
       .then((response) => {
         if (response.status === 200) {
-          dispatch(ActionCreators[Actions.GetReviewList](response.data))
+          dispatch(ActionCreators[Actions.GetReviewList](response.data));
         }
       });
   },

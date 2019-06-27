@@ -9,15 +9,21 @@ import PlacesList from "../places-list/places-list.jsx";
 export class OfferComponent extends React.Component {
   constructor(props) {
     super(props);
+
+    this._loadReviewList = this._loadReviewList.bind(this);
+  }
+
+  _loadReviewList(hotelId) {
+    this.props.loadReviewList(hotelId);
   }
 
   componentDidMount() {
-    this.props.loadReviewList(this.props.offer.id);
+    this._loadReviewList(this.props.offer.id);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.offer.id !== prevProps.offer.id) {
-      this.props.loadReviewList(this.props.offer.id);
+      this._loadReviewList(this.props.offer.id);
     }
   }
 

@@ -25,6 +25,8 @@ it(`Should return initial state by default`, () => {
     user: null,
     sortOffersBy: null,
     selectedOfferId: null,
+    currentOfferId: null,
+    reviewList: []
   });
 });
 
@@ -36,6 +38,8 @@ it(`Should change city`, () => {
     user: null,
     sortOffersBy: null,
     selectedOfferId: null,
+    currentOfferId: null,
+    reviewList: []
   }, {
     type: `CHANGE_CITY`,
     payload: {
@@ -63,6 +67,8 @@ it(`Should change city`, () => {
         user: null,
         sortOffersBy: null,
         selectedOfferId: null,
+        currentOfferId: null,
+        reviewList: []
       }
   );
 });
@@ -75,6 +81,8 @@ it(`Should sort offers`, () => {
     user: null,
     sortOffersBy: null,
     selectedOfferId: null,
+    currentOfferId: null,
+    reviewList: []
   }, {
     type: `CHANGE_OFFERS_SORTING`,
     payload: {
@@ -87,6 +95,8 @@ it(`Should sort offers`, () => {
     user: null,
     sortOffersBy: `Popular`,
     selectedOfferId: null,
+    currentOfferId: null,
+    reviewList: []
   });
 });
 
@@ -98,6 +108,8 @@ it(`Should select offer`, () => {
     user: null,
     sortOffersBy: null,
     selectedOfferId: null,
+    currentOfferId: null,
+    reviewList: []
   }, {
     type: `SELECT_OFFER`,
     payload: {
@@ -110,6 +122,8 @@ it(`Should select offer`, () => {
     user: null,
     sortOffersBy: null,
     selectedOfferId: MOCK_OFFERS.id,
+    currentOfferId: null,
+    reviewList: []
   });
 });
 
@@ -121,6 +135,8 @@ it(`Should select offer`, () => {
     user: null,
     sortOffersBy: null,
     selectedOfferId: null,
+    currentOfferId: null,
+    reviewList: []
   }, {
     type: `SELECT_OFFER`,
     payload: {
@@ -133,6 +149,8 @@ it(`Should select offer`, () => {
     user: null,
     sortOffersBy: null,
     selectedOfferId: MOCK_OFFERS.id,
+    currentOfferId: null,
+    reviewList: []
   });
 });
 
@@ -181,5 +199,50 @@ it(`Should make a correct API call to /login`, () => {
           signInData: [{fake: true}]
         },
       });
+    });
+});
+
+it(`Should make a correct API call to /comments/:hotelId (get review list)`, () => {
+  const mockHotelId = 1;
+  const dispatch = jest.fn();
+  const api = configureAPI(dispatch);
+  const apiMock = new MockAdapter(api);
+  const loadReviewList = Operations.loadReviewList(mockHotelId);
+
+  apiMock
+    .onGet(`/comments/${mockHotelId}`)
+    .reply(200, [{fake: true}]);
+
+  return loadReviewList(dispatch, jest.fn(), api)
+    .then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenNthCalledWith(1, {
+        type: Actions.GetReviewList,
+        payload: {
+          reviewList: [{fake: true}]
+        },
+      });
+    });
+});
+
+it(`Should make a correct API call to /comments/:hotelId (send review)`, () => {
+  const mockHotelId = 1;
+  const mockReview = {
+    rating: 5,
+    comment: `test comment`
+  };
+
+  const dispatch = jest.fn();
+  const api = configureAPI(dispatch);
+  const apiMock = new MockAdapter(api);
+  const sendReview = Operations.sendReview(mockReview, mockHotelId);
+
+  apiMock
+    .onPost(`/comments/${mockHotelId}`, {rating: mockReview.rating, comment: mockReview.comment})
+    .reply(200, [{fake: true}]);
+
+  return sendReview(dispatch, jest.fn(), api)
+    .then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
     });
 });
