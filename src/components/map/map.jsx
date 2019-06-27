@@ -51,7 +51,7 @@ export class Map extends React.Component {
   _addMarkersToMap() {
     this.props.coordinatesList.forEach((coordinates) => {
       leaflet
-        .marker(coordinates, this.icon)
+        .marker(coordinates, {icon: this.icon})
         .addTo(this.layerGroup);
     });
   }
@@ -63,7 +63,7 @@ export class Map extends React.Component {
   _addActiveMarkerToMap() {
     const selectedOfferCoordinates = [this.props.selectedOffer.location.latitude, this.props.selectedOffer.location.longitude];
     leaflet
-      .marker(selectedOfferCoordinates, this.activeIcon)
+      .marker(selectedOfferCoordinates, {icon: this.activeIcon})
       .addTo(this.layerGroup);
   }
 
