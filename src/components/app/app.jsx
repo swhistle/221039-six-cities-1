@@ -24,6 +24,7 @@ class App extends React.PureComponent {
     this._changeSorting = this._changeSorting.bind(this);
     this._selectOffer = this._selectOffer.bind(this);
     this._onSubmitReviewFormHandler = this._onSubmitReviewFormHandler.bind(this);
+    this._loadReviewList = this._loadReviewList.bind(this);
   }
 
   _changeCity(e, city) {
@@ -48,8 +49,16 @@ class App extends React.PureComponent {
     this.props.sendReview(review, hotelId);
   }
 
+  _loadReviewList(hotelId) {
+    this.props.loadReviewList(hotelId);
+  }
+
+  _changeCurrentOffer(newOfferId) {
+    this.props.changeCurrentOffer(newOfferId);
+  }
+
   render() {
-    const {offers, currentCity, user, sortOffersBy, selectedOfferId} = this.props;
+    const {offers, currentCity, user, sortOffersBy, selectedOfferId, reviewList} = this.props;
     const userIsLoggedIn = !!user && !!user.avatar_url && !!user.id;
 
     return <Switch>
@@ -139,14 +148,23 @@ class App extends React.PureComponent {
       }}/>
 
       <Route path="/:id" render={() => {
+
         const offerId = +browserHistory.location.pathname.replace(`/`, ``);
         const currentOffer = offers.find((item) => item.id === offerId);
         if (currentOffer) {
+          this._changeCurrentOffer(offerId);
+
           const nearPlaces = offers
             .filter((item) => item.city.name === currentOffer.city.name)
             .slice(0, 3);
 
-          return <OfferComponent offer={currentOffer} nearPlaces={nearPlaces} onSubmitReviewFormHandler={this._onSubmitReviewFormHandler} userIsLoggedIn={userIsLoggedIn}/>;
+          return <OfferComponent
+            offer={currentOffer}
+            nearPlaces={nearPlaces}
+            onSubmitReviewFormHandler={this._onSubmitReviewFormHandler}
+            userIsLoggedIn={userIsLoggedIn}
+            reviewList={reviewList}
+            loadReviewList={this._loadReviewList}/>;
         }
 
         return null;
@@ -161,6 +179,7 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   user: state.user,
   sortOffersBy: state.sortOffersBy,
   selectedOfferId: state.selectedOfferId,
+  reviewList: state.reviewList,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -181,7 +200,13 @@ const mapDispatchToProps = (dispatch) => ({
   },
   sendReview: (review, hotelId) => {
     dispatch(Operations.sendReview(review, hotelId));
-  }
+  },
+  loadReviewList: (hotelId) => {
+    dispatch(Operations.loadReviewList(hotelId));
+  },
+  changeCurrentOffer: (newOfferId) => {
+    dispatch(ActionCreators[Actions.ChangeCurrentOffer](newOfferId));
+  },
 });
 
 App.propTypes = {
@@ -196,6 +221,9 @@ App.propTypes = {
   selectedOfferId: PropTypes.number,
   selectOffer: PropTypes.func,
   sendReview: PropTypes.func,
+  loadReviewList: PropTypes.func,
+  currentOfferId: PropTypes.number,
+  changeCurrentOffer: PropTypes.func,
 };
 
 export {App};

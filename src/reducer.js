@@ -5,6 +5,8 @@ const initialState = {
   user: null,
   sortOffersBy: null,
   selectedOfferId: null,
+  currentOfferId: null,
+  reviewList: []
 };
 
 export const Operations = {
@@ -27,6 +29,14 @@ export const Operations = {
         }
       });
   },
+  loadReviewList: (hotelId) => (dispatch, _getState, api) => {
+    return api.get(`/comments/${hotelId}`)
+      .then((response) => {
+        if (response.status === 200) {
+          dispatch(ActionCreators[Actions.GetReviewList](response.data))
+        }
+      });
+  },
   sendReview: (review, hotelId) => (dispatch, _getState, api) => {
     return api.post(`/comments/${hotelId}`, {
       rating: review.rating,
@@ -34,7 +44,7 @@ export const Operations = {
     })
       .then((response) => {
         if (response.status === 200) {
-          api.get(`/comments/${hotelId}`);
+          dispatch(Operations.loadReviewList(hotelId));
         }
       });
   }
@@ -48,6 +58,8 @@ const Actions = {
   ChangeOffersSorting: `CHANGE_OFFERS_SORTING`,
   SelectOffer: `SELECT_OFFER`,
   SendReview: `SEND_REVIEW`,
+  GetReviewList: `GET_REVIEW_LIST`,
+  ChangeCurrentOffer: `CHANGE_CURRENT_OFFER`,
 };
 
 const ActionCreators = {
@@ -98,7 +110,23 @@ const ActionCreators = {
         selectedOfferId
       }
     };
-  }
+  },
+  [Actions.GetReviewList]: (reviewList) => {
+    return {
+      type: Actions.GetReviewList,
+      payload: {
+        reviewList
+      }
+    };
+  },
+  [Actions.ChangeCurrentOffer]: (currentOfferId) => {
+    return {
+      type: Actions.ChangeCurrentOffer,
+      payload: {
+        currentOfferId
+      }
+    };
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -133,6 +161,16 @@ const reducer = (state = initialState, action) => {
     case Actions.SelectOffer:
       return Object.assign({}, state, {
         selectedOfferId: action.payload.selectedOfferId
+      });
+
+    case Actions.GetReviewList:
+      return Object.assign({}, state, {
+        reviewList: action.payload.reviewList
+      });
+
+    case Actions.ChangeCurrentOffer:
+      return Object.assign({}, state, {
+        currentOfferId: action.payload.currentOfferId
       });
 
     default:

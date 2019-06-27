@@ -6,13 +6,27 @@ import ReviewForm from "../review-form/review-form.jsx";
 import {Map} from "../map/map.jsx";
 import PlacesList from "../places-list/places-list.jsx";
 
-export class OfferComponent extends React.PureComponent {
+export class OfferComponent extends React.Component {
   constructor(props) {
     super(props);
   }
 
+  componentDidMount() {
+    this.props.loadReviewList(this.props.offer.id);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.offer.id !== prevProps.offer.id) {
+      this.props.loadReviewList(this.props.offer.id);
+    }
+  }
+
+  shouldComponentUpdate() {
+    return true;
+  }
+
   render() {
-    const {offer, nearPlaces, onSubmitReviewFormHandler, userIsLoggedIn} = this.props;
+    const {offer, nearPlaces, onSubmitReviewFormHandler, userIsLoggedIn, reviewList} = this.props;
 
     if (offer && nearPlaces) {
       const nearPlacesCoordinates = nearPlaces.map((place) => [place.location.latitude, place.location.longitude]);
@@ -103,9 +117,9 @@ export class OfferComponent extends React.PureComponent {
                   </p>
                 </div>
               </div>
-              <ReviewListComponent reviewList={[]}/>
+              <ReviewListComponent reviewList={reviewList}/>
               {
-                !userIsLoggedIn ?
+                userIsLoggedIn ?
                   <ReviewForm hotelId={offer.id} onSubmitHandler={onSubmitReviewFormHandler} userIsLoggedIn={userIsLoggedIn}/> :
                   <div>
                     <span>Only registered users can write reviews. </span>
@@ -153,4 +167,6 @@ OfferComponent.propTypes = {
   nearPlaces: PropTypes.array,
   onSubmitReviewFormHandler: PropTypes.func,
   userIsLoggedIn: PropTypes.bool,
+  reviewList: PropTypes.array,
+  loadReviewList: PropTypes.func
 };
