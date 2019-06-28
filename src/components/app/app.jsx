@@ -9,6 +9,7 @@ import SortingOffers from "../sorting-offers/sorting-offers.jsx";
 import {Map} from "../map/map.jsx";
 import {SignInComponent} from "../sign-in/sign-in.jsx";
 import {OfferComponent} from "../offer/offer.jsx";
+import {MainEmptyComponent} from "../main-empty/main-empty.jsx";
 
 import {Actions, ActionCreators, Operations} from "../../reducer";
 
@@ -62,8 +63,9 @@ class App extends React.PureComponent {
           const offersList = offers.filter((item) => item.city.name === currentCity.name);
           const offersCoordinates = offersList.map((offer) => [offer.location.latitude, offer.location.longitude]);
           const selectedOffer = offers.find((item) => item.id === selectedOfferId);
+          const offersListIsEmpty = offers.length === 0;
 
-          return <div>
+          return <React.Fragment>
             <header className="header">
               <div className="container">
                 <div className="header__wrapper">
@@ -100,25 +102,32 @@ class App extends React.PureComponent {
                     clickOnCityHandler={this._changeCity}/>
                 </section>
               </div>
-              <SortingOffers changeSorting={this._changeSorting} activeSortingType={sortOffersBy}/>
-              <div className="cities__places-wrapper">
-                <div className="cities__places-container container">
-                  <section className="cities__places places">
-                    <h2 className="visually-hidden">Places</h2>
-                    <b className="places__found">{offersList.length} places to stay in {currentCity.name}</b>
-                    <div className="cities__places-list places__list tabs__content">
-                      <PlacesList rentObjects={offersList} sortOffersBy={sortOffersBy} selectOffer={this._selectOffer}/>
+
+              {offersListIsEmpty ?
+                <MainEmptyComponent currentCityName={currentCity.name}/> :
+
+                <React.Fragment>
+                  <SortingOffers changeSorting={this._changeSorting} activeSortingType={sortOffersBy}/>
+                  <div className="cities__places-wrapper">
+                    <div className="cities__places-container container">
+                      <section className="cities__places places">
+                        <h2 className="visually-hidden">Places</h2>
+                        <b className="places__found">{offersList.length} places to stay in {currentCity.name}</b>
+                        <div className="cities__places-list places__list tabs__content">
+                          <PlacesList rentObjects={offersList} sortOffersBy={sortOffersBy} selectOffer={this._selectOffer}/>
+                        </div>
+                      </section>
+                      <div className="cities__right-section">
+                        <section className="cities__map map">
+                          <Map cityCoordinates={[currentCity.location.latitude, currentCity.location.longitude]} coordinatesList={offersCoordinates} selectedOffer={selectedOffer}/>
+                        </section>
+                      </div>
                     </div>
-                  </section>
-                  <div className="cities__right-section">
-                    <section className="cities__map map">
-                      <Map cityCoordinates={[currentCity.location.latitude, currentCity.location.longitude]} coordinatesList={offersCoordinates} selectedOffer={selectedOffer}/>
-                    </section>
                   </div>
-                </div>
-              </div>
+                </React.Fragment>
+              }
             </main>
-          </div>;
+          </React.Fragment>;
         }
 
         return null;
@@ -127,11 +136,15 @@ class App extends React.PureComponent {
       <Route path="/:id" render={() => {
         const offerId = +browserHistory.location.pathname.replace(`/`, ``);
         const currentOffer = offers.find((item) => item.id === offerId);
-        const nearPlaces = offers
-          .filter((item) => item.city.name === currentOffer.city.name)
-          .slice(0, 3);
+        if (currentOffer) {
+          const nearPlaces = offers
+            .filter((item) => item.city.name === currentOffer.city.name)
+            .slice(0, 3);
 
-        return <OfferComponent offer={currentOffer} nearPlaces={nearPlaces}/>;
+          return <OfferComponent offer={currentOffer} nearPlaces={nearPlaces}/>;
+        }
+
+        return null;
       }}/>
     </Switch>;
   }
