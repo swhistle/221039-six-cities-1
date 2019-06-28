@@ -1,16 +1,38 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {ReviewListComponent} from "../review-list/review-list.jsx";
+import ReviewForm from "../review-form/review-form.jsx";
 import {Map} from "../map/map.jsx";
 import PlacesList from "../places-list/places-list.jsx";
 
-export class OfferComponent extends React.PureComponent {
+export class OfferComponent extends React.Component {
   constructor(props) {
     super(props);
+
+    this._loadReviewList = this._loadReviewList.bind(this);
+  }
+
+  _loadReviewList(hotelId) {
+    this.props.loadReviewList(hotelId);
+  }
+
+  componentDidMount() {
+    this._loadReviewList(this.props.offer.id);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.offer.id !== prevProps.offer.id) {
+      this._loadReviewList(this.props.offer.id);
+    }
+  }
+
+  shouldComponentUpdate() {
+    return true;
   }
 
   render() {
-    const {offer, nearPlaces} = this.props;
+    const {offer, nearPlaces, onSubmitReviewFormHandler, userIsLoggedIn, reviewList} = this.props;
 
     if (offer && nearPlaces) {
       const nearPlacesCoordinates = nearPlaces.map((place) => [place.location.latitude, place.location.longitude]);
@@ -101,7 +123,17 @@ export class OfferComponent extends React.PureComponent {
                   </p>
                 </div>
               </div>
-              <ReviewListComponent reviewList={[]}/>
+              <ReviewListComponent reviewList={reviewList}/>
+              {
+                userIsLoggedIn ?
+                  <ReviewForm hotelId={offer.id} onSubmitHandler={onSubmitReviewFormHandler} userIsLoggedIn={userIsLoggedIn}/> :
+                  <div>
+                    <span>Only registered users can write reviews. </span>
+                    <Link to="/login">
+                      <span className="offer-sign-in">Sign in</span>
+                    </Link>
+                  </div>
+              }
             </div>
           </div>
           <section className="property__map map">
@@ -138,5 +170,9 @@ OfferComponent.propTypes = {
     }),
     description: PropTypes.string
   }),
-  nearPlaces: PropTypes.array
+  nearPlaces: PropTypes.array,
+  onSubmitReviewFormHandler: PropTypes.func,
+  userIsLoggedIn: PropTypes.bool,
+  reviewList: PropTypes.array,
+  loadReviewList: PropTypes.func
 };

@@ -1,0 +1,178 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReviewFormComponent correct renders 1`] = `
+<form
+  action="#"
+  className="reviews__form form"
+  method="post"
+  onSubmit={[Function]}
+>
+  <label
+    className="reviews__label form__label"
+    htmlFor="review"
+  >
+    Your review
+  </label>
+  <div
+    className="reviews__rating-form form__rating"
+  >
+    <input
+      className="form__rating-input visually-hidden"
+      id="stars1"
+      name="rating"
+      onChange={[Function]}
+      required={true}
+      type="radio"
+      value={1}
+    />
+    <label
+      className="reviews__rating-label form__rating-label"
+      htmlFor="stars1"
+      title="terribly"
+    >
+      <svg
+        className="form__star-image"
+        height="33"
+        width="37"
+      >
+        <use
+          xlinkHref="#icon-star"
+        />
+      </svg>
+    </label>
+    <input
+      className="form__rating-input visually-hidden"
+      id="stars2"
+      name="rating"
+      onChange={[Function]}
+      required={true}
+      type="radio"
+      value={2}
+    />
+    <label
+      className="reviews__rating-label form__rating-label"
+      htmlFor="stars2"
+      title="badly"
+    >
+      <svg
+        className="form__star-image"
+        height="33"
+        width="37"
+      >
+        <use
+          xlinkHref="#icon-star"
+        />
+      </svg>
+    </label>
+    <input
+      className="form__rating-input visually-hidden"
+      id="stars3"
+      name="rating"
+      onChange={[Function]}
+      required={true}
+      type="radio"
+      value={3}
+    />
+    <label
+      className="reviews__rating-label form__rating-label"
+      htmlFor="stars3"
+      title="not bad"
+    >
+      <svg
+        className="form__star-image"
+        height="33"
+        width="37"
+      >
+        <use
+          xlinkHref="#icon-star"
+        />
+      </svg>
+    </label>
+    <input
+      className="form__rating-input visually-hidden"
+      id="stars4"
+      name="rating"
+      onChange={[Function]}
+      required={true}
+      type="radio"
+      value={4}
+    />
+    <label
+      className="reviews__rating-label form__rating-label"
+      htmlFor="stars4"
+      title="good"
+    >
+      <svg
+        className="form__star-image"
+        height="33"
+        width="37"
+      >
+        <use
+          xlinkHref="#icon-star"
+        />
+      </svg>
+    </label>
+    <input
+      className="form__rating-input visually-hidden"
+      id="stars5"
+      name="rating"
+      onChange={[Function]}
+      required={true}
+      type="radio"
+      value={5}
+    />
+    <label
+      className="reviews__rating-label form__rating-label"
+      htmlFor="stars5"
+      title="perfect"
+    >
+      <svg
+        className="form__star-image"
+        height="33"
+        width="37"
+      >
+        <use
+          xlinkHref="#icon-star"
+        />
+      </svg>
+    </label>
+  </div>
+  <textarea
+    className="reviews__textarea form__textarea"
+    id="review"
+    name="review"
+    onChange={[Function]}
+    placeholder="Tell how was your stay, what you like and what can be improved"
+  />
+  <div
+    className="reviews__button-wrapper"
+  >
+    <p
+      className="reviews__help"
+    >
+      To submit review please make sure to set 
+      <span
+        className="reviews__star"
+      >
+        rating
+      </span>
+       and describe your stay with at least 
+      <b
+        className="reviews__text-amount"
+      >
+        50
+         characters and max - 
+        300
+      </b>
+      .
+    </p>
+    <button
+      className="reviews__submit form__submit button"
+      disabled=""
+      type="submit"
+    >
+      Submit
+    </button>
+  </div>
+</form>
+`;

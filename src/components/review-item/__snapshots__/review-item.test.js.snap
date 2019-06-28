@@ -46,7 +46,9 @@ Array [
     </div>
     <p
       className="reviews__text"
-    />
+    >
+      very good
+    </p>
     <time
       className="reviews__time"
       dateTime="2019-04-24"
