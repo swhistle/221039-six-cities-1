@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 import {withReviewForm} from "../../hocs/withReviewForm/withReviewForm";
 
 const INPUT_REVIEW_RATING_ITEMS = [
-  {value: 1, title: `terribly`},
-  {value: 2, title: `badly`},
-  {value: 3, title: `not bad`},
+  {value: 5, title: `perfect`},
   {value: 4, title: `good`},
-  {value: 5, title: `perfect`}
+  {value: 3, title: `not bad`},
+  {value: 2, title: `badly`},
+  {value: 1, title: `terribly`}
 ];
 
 const COMMENT_MIN_LENGTH = 50;
@@ -25,6 +25,10 @@ class ReviewFormComponent extends React.PureComponent {
     } else {
       // alert(`Please, describe your stay with at least ${COMMENT_MIN_LENGTH} characters and max - ${COMMENT_MAX_LENGTH}!`);
     }
+  }
+
+  _starIsActive(value) {
+    return value <= this.props.rating;
   }
 
   render() {
@@ -48,9 +52,7 @@ class ReviewFormComponent extends React.PureComponent {
                 onChange={() => changeRating(item.value)}
                 required/>
               <label htmlFor={`stars${item.value}`} className="reviews__rating-label form__rating-label" title={item.title}>
-                <svg className="form__star-image" width="37" height="33">
-                  <use xlinkHref="#icon-star"></use>
-                </svg>
+                <svg className="form__star-image" width="37" height="33" viewBox="0 0 13 12" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M6.5 9.644L10.517 12 9.451 7.56 13 4.573l-4.674-.386L6.5 0 4.673 4.187 0 4.573 3.549 7.56 2.483 12 6.5 9.644z"/></svg>
               </label>
             </React.Fragment>;
           })

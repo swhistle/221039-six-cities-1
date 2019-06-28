@@ -25,6 +25,7 @@ const init = () => {
   );
 
   store.dispatch(Operations.loadOffers());
+  store.dispatch(Operations.loadFavoriteHotels());
 
   ReactDOM.render(
       <Provider store={store}>

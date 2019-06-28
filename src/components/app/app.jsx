@@ -25,6 +25,7 @@ class App extends React.PureComponent {
     this._selectOffer = this._selectOffer.bind(this);
     this._onSubmitReviewFormHandler = this._onSubmitReviewFormHandler.bind(this);
     this._loadReviewList = this._loadReviewList.bind(this);
+    this._addToBookmarks = this._addToBookmarks.bind(this);
   }
 
   _changeCity(e, city) {
@@ -57,8 +58,12 @@ class App extends React.PureComponent {
     this.props.changeCurrentOffer(newOfferId);
   }
 
+  _addToBookmarks(hotelId, hotelIsBookmarked) {
+    this.props.addHotelInFavorites(hotelId, hotelIsBookmarked);
+  }
+
   render() {
-    const {offers, currentCity, user, sortOffersBy, selectedOfferId, reviewList} = this.props;
+    const {offers, currentCity, user, sortOffersBy, selectedOfferId, reviewList, favoriteOffersList} = this.props;
     const userIsLoggedIn = !!user && !!user.avatar_url && !!user.id;
 
     return <Switch>
@@ -128,7 +133,7 @@ class App extends React.PureComponent {
                         <h2 className="visually-hidden">Places</h2>
                         <b className="places__found">{offersList.length} places to stay in {currentCity.name}</b>
                         <div className="cities__places-list places__list tabs__content">
-                          <PlacesList rentObjects={offersList} sortOffersBy={sortOffersBy} selectOffer={this._selectOffer}/>
+                          <PlacesList rentObjects={offersList} sortOffersBy={sortOffersBy} selectOffer={this._selectOffer} favoriteOffersList={favoriteOffersList} addToBookmarks={this._addToBookmarks}/>
                         </div>
                       </section>
                       <div className="cities__right-section">
@@ -151,8 +156,10 @@ class App extends React.PureComponent {
 
         const offerId = +browserHistory.location.pathname.replace(`/`, ``);
         const currentOffer = offers.find((item) => item.id === offerId);
+
         if (currentOffer) {
           this._changeCurrentOffer(offerId);
+          const currentOfferIsFavorite = favoriteOffersList.some((offer) => offer.id === currentOffer.id && offer.is_favorite);
 
           const nearPlaces = offers
             .filter((item) => item.city.name === currentOffer.city.name)
@@ -164,7 +171,9 @@ class App extends React.PureComponent {
             onSubmitReviewFormHandler={this._onSubmitReviewFormHandler}
             userIsLoggedIn={userIsLoggedIn}
             reviewList={reviewList}
-            loadReviewList={this._loadReviewList}/>;
+            loadReviewList={this._loadReviewList}
+            addToBookmarks={this._addToBookmarks}
+            currentOfferIsFavorite={currentOfferIsFavorite}/>;
         }
 
         return null;
@@ -180,6 +189,7 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   sortOffersBy: state.sortOffersBy,
   selectedOfferId: state.selectedOfferId,
   reviewList: state.reviewList,
+  favoriteOffersList: state.favoriteOffersList
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -207,6 +217,9 @@ const mapDispatchToProps = (dispatch) => ({
   changeCurrentOffer: (newOfferId) => {
     dispatch(ActionCreators[Actions.ChangeCurrentOffer](newOfferId));
   },
+  addHotelInFavorites: (hotelId, hotelIsInFavorites) => {
+    dispatch(Operations.addHotelInFavorites(hotelId, hotelIsInFavorites));
+  },
 });
 
 App.propTypes = {
@@ -225,6 +238,8 @@ App.propTypes = {
   currentOfferId: PropTypes.number,
   changeCurrentOffer: PropTypes.func,
   reviewList: PropTypes.array,
+  addHotelInFavorites: PropTypes.func,
+  favoriteOffersList: PropTypes.array
 };
 
 export {App};

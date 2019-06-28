@@ -18,7 +18,7 @@ class PlacesListComponent extends React.PureComponent {
   }
 
   render() {
-    const {rentObjects, activeItemId, sortOffersBy} = this.props;
+    const {rentObjects, activeItemId, sortOffersBy, favoriteOffersList} = this.props;
 
     const sortBy = (one, two) => {
       if (one < two) {
@@ -50,19 +50,27 @@ class PlacesListComponent extends React.PureComponent {
       }
     };
 
-    return <React.Fragment>
-      {rentObjects
-        .sort(sortOffers)
-        .map((place, index) =>
-          <PlaceCardComponent
-            key={place.id}
-            index={index}
-            rentObject={place}
-            isActiveCard={place.id === activeItemId}
-            clickOnCardImgHandler={this._changeActiveItem}/>
-        )
-      }
-    </React.Fragment>;
+    if (favoriteOffersList) {
+      return <React.Fragment>
+        {rentObjects
+          .sort(sortOffers)
+          .map((place, index) => {
+            const currentOfferIsFavorite = favoriteOffersList.some((offer) => offer.id === place.id && place.is_favorite);
+
+            return <PlaceCardComponent
+              key={place.id}
+              index={index}
+              rentObject={place}
+              isActiveCard={place.id === activeItemId}
+              clickOnCardImgHandler={this._changeActiveItem}
+              addToBookmarks={this.props.addToBookmarks}
+              currentOfferIsFavorite={currentOfferIsFavorite}/>;
+          })
+        }
+      </React.Fragment>;
+    }
+
+    return null;
   }
 }
 
@@ -71,7 +79,9 @@ PlacesListComponent.propTypes = {
   activeItemId: PropTypes.number,
   sortOffersBy: PropTypes.oneOf(sortingOffersTypes),
   changeActiveItemId: PropTypes.func,
-  selectOffer: PropTypes.func
+  selectOffer: PropTypes.func,
+  addToBookmarks: PropTypes.func,
+  favoriteOffersList: PropTypes.array
 };
 
 export {PlacesListComponent};

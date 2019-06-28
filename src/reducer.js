@@ -6,7 +6,8 @@ const initialState = {
   sortOffersBy: null,
   selectedOfferId: null,
   currentOfferId: null,
-  reviewList: []
+  reviewList: [],
+  favoriteOffersList: [],
 };
 
 export const Operations = {
@@ -47,6 +48,18 @@ export const Operations = {
           dispatch(Operations.loadReviewList(hotelId));
         }
       });
+  },
+  loadFavoriteHotels: () => (dispatch, _getState, api) => {
+    return api.get(`/favorite`)
+      .then((response) => dispatch(ActionCreators[Actions.GetFavoriteOffersList](response.data)));
+  },
+  addHotelInFavorites: (hotelId, hotelIsInFavorites) => (dispatch, _getState, api) => {
+    return api.post(`/favorite/${hotelId}/${+hotelIsInFavorites}`)
+      .then((response) => {
+        if (response.status === 200) {
+          dispatch(Operations.loadFavoriteHotels());
+        }
+      });
   }
 };
 
@@ -60,6 +73,7 @@ const Actions = {
   SendReview: `SEND_REVIEW`,
   GetReviewList: `GET_REVIEW_LIST`,
   ChangeCurrentOffer: `CHANGE_CURRENT_OFFER`,
+  GetFavoriteOffersList: `GET_FAVORITE_OFFERS_LIST`,
 };
 
 const ActionCreators = {
@@ -127,6 +141,14 @@ const ActionCreators = {
       }
     };
   },
+  [Actions.GetFavoriteOffersList]: (favoriteOffersList) => {
+    return {
+      type: Actions.GetFavoriteOffersList,
+      payload: {
+        favoriteOffersList
+      }
+    };
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -171,6 +193,11 @@ const reducer = (state = initialState, action) => {
     case Actions.ChangeCurrentOffer:
       return Object.assign({}, state, {
         currentOfferId: action.payload.currentOfferId
+      });
+
+    case Actions.GetFavoriteOffersList:
+      return Object.assign({}, state, {
+        favoriteOffersList: action.payload.favoriteOffersList
       });
 
     default:

@@ -5,6 +5,12 @@ import {ReviewListComponent} from "../review-list/review-list.jsx";
 import ReviewForm from "../review-form/review-form.jsx";
 import {Map} from "../map/map.jsx";
 import PlacesList from "../places-list/places-list.jsx";
+import Bookmark from "../bookmark/bookmark.jsx";
+
+const BOOKMARK_SIZE = {
+  width: 31,
+  height: 33
+};
 
 export class OfferComponent extends React.Component {
   constructor(props) {
@@ -32,7 +38,7 @@ export class OfferComponent extends React.Component {
   }
 
   render() {
-    const {offer, nearPlaces, onSubmitReviewFormHandler, userIsLoggedIn, reviewList} = this.props;
+    const {offer, nearPlaces, onSubmitReviewFormHandler, userIsLoggedIn, reviewList, currentOfferIsFavorite, addToBookmarks} = this.props;
 
     if (offer && nearPlaces) {
       const nearPlacesCoordinates = nearPlaces.map((place) => [place.location.latitude, place.location.longitude]);
@@ -58,19 +64,16 @@ export class OfferComponent extends React.Component {
                   </div> : ``
               }
               <div className="property__name-wrapper">
-                <h1 className="property__name">
+                <h1 className="prop`erty__name">
                   {offer.title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <span className="property__bookmark-button">
+                  <Bookmark width={BOOKMARK_SIZE.width} height={BOOKMARK_SIZE.height} addToBookmarks={addToBookmarks} elementIsActive={currentOfferIsFavorite} hotelId={offer.id}/>
+                </span>
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: `96%`}}></span>
+                  <span style={{width: `96%`}}/>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{offer.rating}</span>
@@ -174,5 +177,7 @@ OfferComponent.propTypes = {
   onSubmitReviewFormHandler: PropTypes.func,
   userIsLoggedIn: PropTypes.bool,
   reviewList: PropTypes.array,
-  loadReviewList: PropTypes.func
+  loadReviewList: PropTypes.func,
+  addToBookmarks: PropTypes.func,
+  currentOfferIsFavorite: PropTypes.bool,
 };
