@@ -68,7 +68,7 @@ class App extends React.PureComponent {
     const userIsLoggedIn = !!user && !!user.avatar_url && !!user.id;
 
     return <Switch>
-      <Route path="/login" render={() => <SignInComponent onSubmitHandler={this._onSubmitHandler}/>}/>
+      <Route path="/login" render={() => <SignInComponent onSubmitHandler={this._onSubmitHandler} currentCity={currentCity.name}/>}/>
 
       <Route path="/favorites" render={() => <FavoritesComponent favoriteOffers={favoriteOffersList} addToBookmarks={this._addToBookmarks}/>}/>
 
@@ -178,7 +178,8 @@ class App extends React.PureComponent {
             reviewList={reviewList}
             loadReviewList={this._loadReviewList}
             addToBookmarks={this._addToBookmarks}
-            currentOfferIsFavorite={currentOfferIsFavorite}/>;
+            currentOfferIsFavorite={currentOfferIsFavorite}
+            favoriteOffers={favoriteOffersList}/>;
         }
 
         return null;

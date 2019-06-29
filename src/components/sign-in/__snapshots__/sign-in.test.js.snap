@@ -63,6 +63,24 @@ exports[`SignInComponent correct renders 1`] = `
         </button>
       </form>
     </section>
+    <section
+      className="locations locations--login locations--current"
+    >
+      <div
+        className="locations__item"
+      >
+        <span
+          className="locations__item-link"
+        >
+          <a
+            href="/"
+            onClick={[Function]}
+          >
+            Amsterdam
+          </a>
+        </span>
+      </div>
+    </section>
   </div>
 </main>
 `;

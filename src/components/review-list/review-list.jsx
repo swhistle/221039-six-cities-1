@@ -8,6 +8,19 @@ export class ReviewListComponent extends React.PureComponent {
     super(props);
   }
 
+  _sortReviewsListByDate(one, two) {
+    const oneDate = new Date(one.date);
+    const twoDate = new Date(two.date);
+
+    if (oneDate < twoDate) {
+      return 1;
+    } else if (oneDate > twoDate) {
+      return -1;
+    }
+
+    return 0;
+  }
+
   render() {
     const {reviewList} = this.props;
 
@@ -17,9 +30,12 @@ export class ReviewListComponent extends React.PureComponent {
           <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewList.length}</span></h2>
           <ul className="reviews__list">
             {
-              reviewList.length > 0 ? reviewList.map((reviewItem) => <li key={`review-${reviewItem.id}`} className="reviews__item">
-                <ReviewItemComponent review={reviewItem}/>
-              </li>) : ``
+              reviewList.length > 0 ? reviewList
+                .sort(this._sortReviewsListByDate)
+                .slice(0, 10)
+                .map((reviewItem) => <li key={`review-${reviewItem.id}`} className="reviews__item">
+                  <ReviewItemComponent review={reviewItem}/>
+                </li>) : ``
             }
           </ul>
         </section>

@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
 
 export class SignInComponent extends React.PureComponent {
   constructor(props) {
@@ -23,7 +24,7 @@ export class SignInComponent extends React.PureComponent {
   }
 
   render() {
-    const {onSubmitHandler} = this.props;
+    const {currentCity, onSubmitHandler} = this.props;
 
     return <main className="page__main page__main--login">
       <div className="page__login-container container">
@@ -41,11 +42,19 @@ export class SignInComponent extends React.PureComponent {
             <button className="login__submit form__submit button" type="submit">Sign in</button>
           </form>
         </section>
+        <section className="locations locations--login locations--current">
+          <div className="locations__item">
+            <span className="locations__item-link">
+              <Link to={`/`}>{currentCity}</Link>
+            </span>
+          </div>
+        </section>
       </div>
     </main>;
   }
 }
 
 SignInComponent.propTypes = {
-  onSubmitHandler: PropTypes.func
+  currentCity: PropTypes.string,
+  onSubmitHandler: PropTypes.func,
 };

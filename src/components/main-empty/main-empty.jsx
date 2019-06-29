@@ -19,6 +19,7 @@ export class MainEmptyComponent extends React.PureComponent {
           </div>
         </section>
         <div className="cities__right-section">
+          <img src="img/no-places.jpg" alt="no-places"/>
         </div>
       </div>
     </div>;

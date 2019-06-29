@@ -77,7 +77,7 @@ export class Map extends React.Component {
       this._updateMap();
     }
 
-    if (!Object.is(this.props.selectedOffer, prevProps.selectedOffer)) {
+    if (this.props.selectedOffer) {
       this._addActiveMarkerToMap();
     }
   }

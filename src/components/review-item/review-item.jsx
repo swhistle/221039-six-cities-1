@@ -21,14 +21,14 @@ export class ReviewItemComponent extends React.PureComponent {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: `94%`}}></span>
+            <span style={{width: `${review.rating * 20}%`}}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <p className="reviews__text">
           {review.comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{review.user.date}</time>
+        <time className="reviews__time" dateTime={review.date}>{new Date(review.date).toDateString()}</time>
       </div>
     </React.Fragment>;
   }

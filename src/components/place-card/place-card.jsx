@@ -32,7 +32,7 @@ export class PlaceCardComponent extends React.PureComponent {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `100%`}}/>
+            <span style={{width: `${rentObject.rating * 20}%`}}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

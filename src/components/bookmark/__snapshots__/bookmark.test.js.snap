@@ -4,6 +4,7 @@ exports[`BookmarkComponent correct renders 1`] = `
 <button
   className="place-card__bookmark-button button"
   onClick={[Function]}
+  title="add to favorites"
   type="button"
 >
   <svg

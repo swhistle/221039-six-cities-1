@@ -13,8 +13,15 @@ class PlacesListComponent extends React.PureComponent {
   }
 
   _changeActiveItem(e, offerId) {
-    this.props.changeActiveItemId(e, offerId);
-    this.props.selectOffer(offerId);
+    e.preventDefault();
+
+    if (this.props.changeActiveItemId) {
+      this.props.changeActiveItemId(e, offerId);
+    }
+
+    if (this.props.selectOffer) {
+      this.props.selectOffer(offerId);
+    }
   }
 
   render() {
@@ -50,27 +57,24 @@ class PlacesListComponent extends React.PureComponent {
       }
     };
 
-    if (favoriteOffersList) {
-      return <React.Fragment>
-        {rentObjects
-          .sort(sortOffers)
-          .map((place, index) => {
-            const currentOfferIsFavorite = favoriteOffersList.some((offer) => offer.id === place.id && place.is_favorite);
+    return <React.Fragment>
+      {rentObjects
+        .sort(sortOffers)
+        .map((place, index) => {
+          const currentOfferIsFavorite = favoriteOffersList ? favoriteOffersList.some((offer) => offer.id === place.id && place.is_favorite) : null;
 
-            return <PlaceCardComponent
-              key={place.id}
-              index={index}
-              rentObject={place}
-              isActiveCard={place.id === activeItemId}
-              clickOnCardImgHandler={this._changeActiveItem}
-              addToBookmarks={this.props.addToBookmarks}
-              currentOfferIsFavorite={currentOfferIsFavorite}/>;
-          })
-        }
-      </React.Fragment>;
-    }
+          return <PlaceCardComponent
+            key={place.id}
+            index={index}
+            rentObject={place}
+            isActiveCard={place.id === activeItemId}
+            clickOnCardImgHandler={this._changeActiveItem}
+            addToBookmarks={this.props.addToBookmarks}
+            currentOfferIsFavorite={currentOfferIsFavorite}/>;
+        })
+      }
+    </React.Fragment>;
 
-    return null;
   }
 }
 

@@ -43,6 +43,7 @@ exports[`PlaceCardComponent correct renders 1`] = `
       <button
         className="place-card__bookmark-button button"
         onClick={[Function]}
+        title="add to favorites"
         type="button"
       >
         <svg
@@ -72,7 +73,7 @@ exports[`PlaceCardComponent correct renders 1`] = `
         <span
           style={
             Object {
-              "width": "100%",
+              "width": "80%",
             }
           }
         />

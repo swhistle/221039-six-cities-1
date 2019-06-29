@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {ReviewListComponent} from "../review-list/review-list.jsx";
 import ReviewForm from "../review-form/review-form.jsx";
 import {Map} from "../map/map.jsx";
-import PlacesList from "../places-list/places-list.jsx";
+import {PlacesListComponent} from "../places-list/places-list.jsx";
 import Bookmark from "../bookmark/bookmark.jsx";
 
 const BOOKMARK_SIZE = {
@@ -38,7 +38,7 @@ export class OfferComponent extends React.Component {
   }
 
   render() {
-    const {offer, nearPlaces, onSubmitReviewFormHandler, userIsLoggedIn, reviewList, currentOfferIsFavorite, addToBookmarks} = this.props;
+    const {offer, nearPlaces, onSubmitReviewFormHandler, userIsLoggedIn, reviewList, currentOfferIsFavorite, addToBookmarks, favoriteOffers} = this.props;
 
     if (offer && nearPlaces) {
       const nearPlacesCoordinates = nearPlaces.map((place) => [place.location.latitude, place.location.longitude]);
@@ -73,7 +73,7 @@ export class OfferComponent extends React.Component {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: `96%`}}/>
+                  <span style={{width: `${offer.rating * 20}%`}}/>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{offer.rating}</span>
@@ -140,14 +140,14 @@ export class OfferComponent extends React.Component {
             </div>
           </div>
           <section className="property__map map">
-            <Map cityCoordinates={[offer.location.latitude, offer.location.longitude]} coordinatesList={nearPlacesCoordinates}/>
+            <Map cityCoordinates={[offer.location.latitude, offer.location.longitude]} coordinatesList={nearPlacesCoordinates} selectedOffer={offer}/>
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <PlacesList rentObjects={nearPlaces}/>
+              <PlacesListComponent rentObjects={nearPlaces} favoriteOffersList={favoriteOffers} addToBookmarks={addToBookmarks}/>
             </div>
           </section>
         </div>
@@ -180,4 +180,5 @@ OfferComponent.propTypes = {
   loadReviewList: PropTypes.func,
   addToBookmarks: PropTypes.func,
   currentOfferIsFavorite: PropTypes.bool,
+  favoriteOffers: PropTypes.array,
 };

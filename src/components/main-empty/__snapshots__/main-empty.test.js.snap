@@ -28,7 +28,12 @@ exports[`MainEmptyComponent correct renders 1`] = `
     </section>
     <div
       className="cities__right-section"
-    />
+    >
+      <img
+        alt="no-places"
+        src="img/no-places.jpg"
+      />
+    </div>
   </div>
 </div>
 `;

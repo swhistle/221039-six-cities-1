@@ -33,7 +33,7 @@ Array [
         <span
           style={
             Object {
-              "width": "94%",
+              "width": "80%",
             }
           }
         />
@@ -51,8 +51,9 @@ Array [
     </p>
     <time
       className="reviews__time"
-      dateTime="2019-04-24"
-    />
+    >
+      Invalid Date
+    </time>
   </div>,
 ]
 `;
