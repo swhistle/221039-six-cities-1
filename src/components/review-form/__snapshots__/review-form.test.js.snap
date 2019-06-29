@@ -18,73 +18,29 @@ exports[`ReviewFormComponent correct renders 1`] = `
   >
     <input
       className="form__rating-input visually-hidden"
-      id="stars1"
+      id="stars5"
       name="rating"
       onChange={[Function]}
       required={true}
       type="radio"
-      value={1}
+      value={5}
     />
     <label
       className="reviews__rating-label form__rating-label"
-      htmlFor="stars1"
-      title="terribly"
+      htmlFor="stars5"
+      title="perfect"
     >
       <svg
         className="form__star-image"
         height="33"
+        viewBox="0 0 13 12"
         width="37"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <use
-          xlinkHref="#icon-star"
-        />
-      </svg>
-    </label>
-    <input
-      className="form__rating-input visually-hidden"
-      id="stars2"
-      name="rating"
-      onChange={[Function]}
-      required={true}
-      type="radio"
-      value={2}
-    />
-    <label
-      className="reviews__rating-label form__rating-label"
-      htmlFor="stars2"
-      title="badly"
-    >
-      <svg
-        className="form__star-image"
-        height="33"
-        width="37"
-      >
-        <use
-          xlinkHref="#icon-star"
-        />
-      </svg>
-    </label>
-    <input
-      className="form__rating-input visually-hidden"
-      id="stars3"
-      name="rating"
-      onChange={[Function]}
-      required={true}
-      type="radio"
-      value={3}
-    />
-    <label
-      className="reviews__rating-label form__rating-label"
-      htmlFor="stars3"
-      title="not bad"
-    >
-      <svg
-        className="form__star-image"
-        height="33"
-        width="37"
-      >
-        <use
-          xlinkHref="#icon-star"
+        <path
+          clipRule="evenodd"
+          d="M6.5 9.644L10.517 12 9.451 7.56 13 4.573l-4.674-.386L6.5 0 4.673 4.187 0 4.573 3.549 7.56 2.483 12 6.5 9.644z"
+          fillRule="evenodd"
         />
       </svg>
     </label>
@@ -105,34 +61,98 @@ exports[`ReviewFormComponent correct renders 1`] = `
       <svg
         className="form__star-image"
         height="33"
+        viewBox="0 0 13 12"
         width="37"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <use
-          xlinkHref="#icon-star"
+        <path
+          clipRule="evenodd"
+          d="M6.5 9.644L10.517 12 9.451 7.56 13 4.573l-4.674-.386L6.5 0 4.673 4.187 0 4.573 3.549 7.56 2.483 12 6.5 9.644z"
+          fillRule="evenodd"
         />
       </svg>
     </label>
     <input
       className="form__rating-input visually-hidden"
-      id="stars5"
+      id="stars3"
       name="rating"
       onChange={[Function]}
       required={true}
       type="radio"
-      value={5}
+      value={3}
     />
     <label
       className="reviews__rating-label form__rating-label"
-      htmlFor="stars5"
-      title="perfect"
+      htmlFor="stars3"
+      title="not bad"
     >
       <svg
         className="form__star-image"
         height="33"
+        viewBox="0 0 13 12"
         width="37"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <use
-          xlinkHref="#icon-star"
+        <path
+          clipRule="evenodd"
+          d="M6.5 9.644L10.517 12 9.451 7.56 13 4.573l-4.674-.386L6.5 0 4.673 4.187 0 4.573 3.549 7.56 2.483 12 6.5 9.644z"
+          fillRule="evenodd"
+        />
+      </svg>
+    </label>
+    <input
+      className="form__rating-input visually-hidden"
+      id="stars2"
+      name="rating"
+      onChange={[Function]}
+      required={true}
+      type="radio"
+      value={2}
+    />
+    <label
+      className="reviews__rating-label form__rating-label"
+      htmlFor="stars2"
+      title="badly"
+    >
+      <svg
+        className="form__star-image"
+        height="33"
+        viewBox="0 0 13 12"
+        width="37"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          clipRule="evenodd"
+          d="M6.5 9.644L10.517 12 9.451 7.56 13 4.573l-4.674-.386L6.5 0 4.673 4.187 0 4.573 3.549 7.56 2.483 12 6.5 9.644z"
+          fillRule="evenodd"
+        />
+      </svg>
+    </label>
+    <input
+      className="form__rating-input visually-hidden"
+      id="stars1"
+      name="rating"
+      onChange={[Function]}
+      required={true}
+      type="radio"
+      value={1}
+    />
+    <label
+      className="reviews__rating-label form__rating-label"
+      htmlFor="stars1"
+      title="terribly"
+    >
+      <svg
+        className="form__star-image"
+        height="33"
+        viewBox="0 0 13 12"
+        width="37"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          clipRule="evenodd"
+          d="M6.5 9.644L10.517 12 9.451 7.56 13 4.573l-4.674-.386L6.5 0 4.673 4.187 0 4.573 3.549 7.56 2.483 12 6.5 9.644z"
+          fillRule="evenodd"
         />
       </svg>
     </label>

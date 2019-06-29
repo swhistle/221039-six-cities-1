@@ -26,7 +26,8 @@ it(`Should return initial state by default`, () => {
     sortOffersBy: null,
     selectedOfferId: null,
     currentOfferId: null,
-    reviewList: []
+    reviewList: [],
+    favoriteOffersList: []
   });
 });
 
@@ -39,7 +40,8 @@ it(`Should change city`, () => {
     sortOffersBy: null,
     selectedOfferId: null,
     currentOfferId: null,
-    reviewList: []
+    reviewList: [],
+    favoriteOffersList: []
   }, {
     type: `CHANGE_CITY`,
     payload: {
@@ -68,7 +70,8 @@ it(`Should change city`, () => {
         sortOffersBy: null,
         selectedOfferId: null,
         currentOfferId: null,
-        reviewList: []
+        reviewList: [],
+        favoriteOffersList: []
       }
   );
 });
@@ -82,7 +85,8 @@ it(`Should sort offers`, () => {
     sortOffersBy: null,
     selectedOfferId: null,
     currentOfferId: null,
-    reviewList: []
+    reviewList: [],
+    favoriteOffersList: []
   }, {
     type: `CHANGE_OFFERS_SORTING`,
     payload: {
@@ -96,7 +100,8 @@ it(`Should sort offers`, () => {
     sortOffersBy: `Popular`,
     selectedOfferId: null,
     currentOfferId: null,
-    reviewList: []
+    reviewList: [],
+    favoriteOffersList: []
   });
 });
 
@@ -109,7 +114,8 @@ it(`Should select offer`, () => {
     sortOffersBy: null,
     selectedOfferId: null,
     currentOfferId: null,
-    reviewList: []
+    reviewList: [],
+    favoriteOffersList: []
   }, {
     type: `SELECT_OFFER`,
     payload: {
@@ -123,7 +129,8 @@ it(`Should select offer`, () => {
     sortOffersBy: null,
     selectedOfferId: MOCK_OFFERS.id,
     currentOfferId: null,
-    reviewList: []
+    reviewList: [],
+    favoriteOffersList: []
   });
 });
 
@@ -136,7 +143,8 @@ it(`Should select offer`, () => {
     sortOffersBy: null,
     selectedOfferId: null,
     currentOfferId: null,
-    reviewList: []
+    reviewList: [],
+    favoriteOffersList: []
   }, {
     type: `SELECT_OFFER`,
     payload: {
@@ -150,7 +158,8 @@ it(`Should select offer`, () => {
     sortOffersBy: null,
     selectedOfferId: MOCK_OFFERS.id,
     currentOfferId: null,
-    reviewList: []
+    reviewList: [],
+    favoriteOffersList: []
   });
 });
 
@@ -242,6 +251,46 @@ it(`Should make a correct API call to /comments/:hotelId (send review)`, () => {
     .reply(200, [{fake: true}]);
 
   return sendReview(dispatch, jest.fn(), api)
+    .then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
+    });
+});
+
+it(`Should make a correct API call to /favorite (get favorite offers list)`, () => {
+  const dispatch = jest.fn();
+  const api = configureAPI(dispatch);
+  const apiMock = new MockAdapter(api);
+  const loadFavoriteOffersList = Operations.loadFavoriteHotels();
+
+  apiMock
+    .onGet(`/favorite`)
+    .reply(200, [{fake: true}]);
+
+  return loadFavoriteOffersList(dispatch, jest.fn(), api)
+    .then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenNthCalledWith(1, {
+        type: Actions.GetFavoriteOffersList,
+        payload: {
+          favoriteOffersList: [{fake: true}]
+        },
+      });
+    });
+});
+
+it(`Should make a correct API call to /favorite (add hotel in favorites)`, () => {
+  const mockHotelId = 1;
+  const mockHotelIsFavorite = true;
+  const dispatch = jest.fn();
+  const api = configureAPI(dispatch);
+  const apiMock = new MockAdapter(api);
+  const addHotelInFavorite = Operations.addHotelInFavorites(mockHotelId, mockHotelIsFavorite);
+
+  apiMock
+    .onPost(`/favorite/${mockHotelId}/${+mockHotelIsFavorite}`)
+    .reply(200, [{fake: true}]);
+
+  return addHotelInFavorite(dispatch, jest.fn(), api)
     .then(() => {
       expect(dispatch).toHaveBeenCalledTimes(1);
     });

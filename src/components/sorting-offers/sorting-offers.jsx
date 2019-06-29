@@ -21,7 +21,7 @@ class SortingOffersComponent extends React.PureComponent {
       <span className="places__sorting-type" tabIndex="0" onClick={() => changeElementIsActive(elementIsActive)}>
         {activeSortingType || sortingOffersTypes[0]}
         <svg className="places__sorting-arrow" width="7" height="4">
-          <use xlinkHref="#icon-arrow-select"></use>
+          <use xlinkHref="#icon-arrow-select"/>
         </svg>
       </span>
       <ul className={elementIsActive ? `places__options places__options--custom places__options--opened` : `places__options places__options--custom`}>
