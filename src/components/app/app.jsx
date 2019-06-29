@@ -10,6 +10,7 @@ import {Map} from "../map/map.jsx";
 import {SignInComponent} from "../sign-in/sign-in.jsx";
 import {OfferComponent} from "../offer/offer.jsx";
 import {MainEmptyComponent} from "../main-empty/main-empty.jsx";
+import {FavoritesComponent} from "../favorites/favorites.jsx";
 
 import {Actions, ActionCreators, Operations} from "../../reducer";
 
@@ -69,6 +70,8 @@ class App extends React.PureComponent {
     return <Switch>
       <Route path="/login" render={() => <SignInComponent onSubmitHandler={this._onSubmitHandler}/>}/>
 
+      <Route path="/favorites" render={() => <FavoritesComponent favoriteOffers={favoriteOffersList} addToBookmarks={this._addToBookmarks}/>}/>
+
       <Route path="/" exact render={() => {
         if (offers && offers.length > 0) {
           const cityList = offers.reduce((acc, item) => {
@@ -96,14 +99,16 @@ class App extends React.PureComponent {
                   <nav className="header__nav">
                     <ul className="header__nav-list">
                       <li className="header__nav-item user">
-                        <Link className="header__nav-link header__nav-link--profile" to="/login">
-                          <div className="header__avatar-wrapper user__avatar-wrapper">
-                            {
-                              userIsLoggedIn ? <img src={`https://es31-server.appspot.com/six-cities${user.avatar_url}`} alt="avatar"/> : ``
-                            }
-                          </div>
-                          {userIsLoggedIn ? `` : <span className="header__login">Sign in</span>}
-                        </Link>
+                        {
+                          userIsLoggedIn ? <Link className="header__nav-link header__nav-link--profile" to="/favorites">
+                            <div className="header__avatar-wrapper user__avatar-wrapper">
+                              <img src={`https://es31-server.appspot.com/six-cities${user.avatar_url}`} alt="avatar"/>
+                            </div>
+                          </Link> : <Link className="header__nav-link header__nav-link--profile" to="/login">
+                            <div className="header__avatar-wrapper user__avatar-wrapper"/>
+                            <span className="header__login">Sign in</span>
+                          </Link>
+                        }
                       </li>
                     </ul>
                   </nav>
