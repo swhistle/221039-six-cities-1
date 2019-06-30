@@ -13,6 +13,7 @@ export const withReviewForm = (Component) => {
 
       this._changeRating = this._changeRating.bind(this);
       this._changeComment = this._changeComment.bind(this);
+      this._clearReviewForm = this._clearReviewForm.bind(this);
     }
 
     _changeRating(value) {
@@ -23,6 +24,13 @@ export const withReviewForm = (Component) => {
       this.setState({comment: text});
     }
 
+    _clearReviewForm() {
+      this.setState({
+        rating: 0,
+        comment: ``
+      });
+    }
+
     render() {
       return <Component
         {...this.props}
@@ -30,6 +38,7 @@ export const withReviewForm = (Component) => {
         comment={this.state.comment}
         changeRating={this._changeRating}
         changeComment={this._changeComment}
+        clearReviewForm={this._clearReviewForm}
       />;
     }
   }

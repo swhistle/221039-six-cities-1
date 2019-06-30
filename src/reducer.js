@@ -8,6 +8,10 @@ const initialState = {
   currentOfferId: null,
   reviewList: [],
   favoriteOffersList: [],
+  reviewFormState: {
+    disabled: false,
+    errorOccurred: false
+  }
 };
 
 export const Operations = {
@@ -46,6 +50,9 @@ export const Operations = {
       .then((response) => {
         if (response.status === 200) {
           dispatch(Operations.loadReviewList(hotelId));
+          dispatch(ActionCreators[Actions.DisableReviewForm](false));
+        } else {
+          dispatch(ActionCreators[Actions.FailSendingReview](false));
         }
       });
   },
@@ -74,6 +81,8 @@ const Actions = {
   GetReviewList: `GET_REVIEW_LIST`,
   ChangeCurrentOffer: `CHANGE_CURRENT_OFFER`,
   GetFavoriteOffersList: `GET_FAVORITE_OFFERS_LIST`,
+  DisableReviewForm: `DISABLE_REVIEW_FORM`,
+  FailSendingReview: `FAIL_SENDING_REVIEW`,
 };
 
 const ActionCreators = {
@@ -149,6 +158,22 @@ const ActionCreators = {
       }
     };
   },
+  [Actions.DisableReviewForm]: (disableReviewForm) => {
+    return {
+      type: Actions.DisableReviewForm,
+      payload: {
+        disableReviewForm
+      }
+    };
+  },
+  [Actions.FailSendingReview]: (errorOccurred) => {
+    return {
+      type: Actions.FailSendingReview,
+      payload: {
+        errorOccurred
+      }
+    };
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -198,6 +223,22 @@ const reducer = (state = initialState, action) => {
     case Actions.GetFavoriteOffersList:
       return Object.assign({}, state, {
         favoriteOffersList: action.payload.favoriteOffersList
+      });
+
+    case Actions.DisableReviewForm:
+      return Object.assign({}, state, {
+        reviewFormState: {
+          disabled: action.payload.disableReviewForm,
+          errorOccurred: initialState.reviewFormState.errorOccurred
+        }
+      });
+
+    case Actions.FailSendingReview:
+      return Object.assign({}, state, {
+        reviewFormState: {
+          disabled: initialState.reviewFormState.disableReviewForm,
+          errorOccurred: action.payload.errorOccurred
+        }
       });
 
     default:

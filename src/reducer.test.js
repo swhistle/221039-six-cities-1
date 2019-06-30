@@ -17,33 +17,29 @@ const MOCK_OFFERS = [
   }
 ];
 
+const INITIAL_STATE = {
+  city: null,
+  offers: [],
+  isAuthorizationRequired: false,
+  user: null,
+  sortOffersBy: null,
+  selectedOfferId: null,
+  currentOfferId: null,
+  reviewList: [],
+  favoriteOffersList: [],
+  reviewFormState: {
+    disabled: false,
+    errorOccurred: false
+  }
+};
+
 it(`Should return initial state by default`, () => {
-  expect(reducer(undefined, {})).toEqual({
-    city: null,
-    offers: [],
-    isAuthorizationRequired: false,
-    user: null,
-    sortOffersBy: null,
-    selectedOfferId: null,
-    currentOfferId: null,
-    reviewList: [],
-    favoriteOffersList: []
-  });
+  expect(reducer(undefined, {})).toEqual(INITIAL_STATE);
 });
 
 it(`Should change city`, () => {
-  expect(reducer({
-    city: undefined,
-    offers: [],
-    isAuthorizationRequired: false,
-    user: null,
-    sortOffersBy: null,
-    selectedOfferId: null,
-    currentOfferId: null,
-    reviewList: [],
-    favoriteOffersList: []
-  }, {
-    type: `CHANGE_CITY`,
+  expect(reducer(INITIAL_STATE, {
+    type: Actions.ChangeCity,
     payload: {
       city: {
         name: `Cologne`,
@@ -55,7 +51,7 @@ it(`Should change city`, () => {
       }
     }
   })).toEqual(
-      {
+      Object.assign({}, INITIAL_STATE, {
         city: {
           name: `Cologne`,
           location: {
@@ -64,103 +60,76 @@ it(`Should change city`, () => {
             zoom: 13
           }
         },
-        offers: [],
-        isAuthorizationRequired: false,
-        user: null,
-        sortOffersBy: null,
-        selectedOfferId: null,
-        currentOfferId: null,
-        reviewList: [],
-        favoriteOffersList: []
-      }
+      })
   );
 });
 
 it(`Should sort offers`, () => {
-  expect(reducer({
-    city: undefined,
-    offers: MOCK_OFFERS,
-    isAuthorizationRequired: false,
-    user: null,
-    sortOffersBy: null,
-    selectedOfferId: null,
-    currentOfferId: null,
-    reviewList: [],
-    favoriteOffersList: []
-  }, {
-    type: `CHANGE_OFFERS_SORTING`,
-    payload: {
-      sortingType: `Popular`
-    }
-  })).toEqual({
-    city: undefined,
-    offers: MOCK_OFFERS,
-    isAuthorizationRequired: false,
-    user: null,
-    sortOffersBy: `Popular`,
-    selectedOfferId: null,
-    currentOfferId: null,
-    reviewList: [],
-    favoriteOffersList: []
-  });
+  expect(reducer(
+      Object.assign({}, INITIAL_STATE, {
+        offers: MOCK_OFFERS
+      }), {
+        type: Actions.ChangeOffersSorting,
+        payload: {
+          sortingType: `Popular`
+        }
+      })).toEqual(
+      Object.assign({}, INITIAL_STATE, {
+        offers: MOCK_OFFERS,
+        sortOffersBy: `Popular`
+      })
+  );
 });
 
 it(`Should select offer`, () => {
-  expect(reducer({
-    city: undefined,
-    offers: MOCK_OFFERS,
-    isAuthorizationRequired: false,
-    user: null,
-    sortOffersBy: null,
-    selectedOfferId: null,
-    currentOfferId: null,
-    reviewList: [],
-    favoriteOffersList: []
-  }, {
-    type: `SELECT_OFFER`,
-    payload: {
-      selectedOfferId: MOCK_OFFERS.id
-    }
-  })).toEqual({
-    city: undefined,
-    offers: MOCK_OFFERS,
-    isAuthorizationRequired: false,
-    user: null,
-    sortOffersBy: null,
-    selectedOfferId: MOCK_OFFERS.id,
-    currentOfferId: null,
-    reviewList: [],
-    favoriteOffersList: []
-  });
+  expect(reducer(
+      Object.assign({}, INITIAL_STATE, {
+        offers: MOCK_OFFERS
+      }), {
+        type: Actions.SelectOffer,
+        payload: {
+          selectedOfferId: MOCK_OFFERS.id
+        }
+      })).toEqual(
+      Object.assign({}, INITIAL_STATE, {
+        offers: MOCK_OFFERS,
+        selectedOfferId: MOCK_OFFERS.id
+      })
+  );
 });
 
-it(`Should select offer`, () => {
-  expect(reducer({
-    city: undefined,
-    offers: MOCK_OFFERS,
-    isAuthorizationRequired: false,
-    user: null,
-    sortOffersBy: null,
-    selectedOfferId: null,
-    currentOfferId: null,
-    reviewList: [],
-    favoriteOffersList: []
-  }, {
-    type: `SELECT_OFFER`,
-    payload: {
-      selectedOfferId: MOCK_OFFERS.id
-    }
-  })).toEqual({
-    city: undefined,
-    offers: MOCK_OFFERS,
-    isAuthorizationRequired: false,
-    user: null,
-    sortOffersBy: null,
-    selectedOfferId: MOCK_OFFERS.id,
-    currentOfferId: null,
-    reviewList: [],
-    favoriteOffersList: []
-  });
+it(`Should disable review form`, () => {
+  expect(reducer(
+      Object.assign({}, INITIAL_STATE), {
+        type: Actions.DisableReviewForm,
+        payload: {
+          disableReviewForm: true
+        }
+      })).toEqual(
+      Object.assign({}, INITIAL_STATE, {
+        reviewFormState: {
+          disabled: true,
+          errorOccurred: false
+        }
+      })
+  );
+});
+
+it(`Should fail to send review`, () => {
+  expect(reducer(
+      Object.assign({}, INITIAL_STATE), {
+        type: Actions.FailSendingReview,
+        payload: {
+          errorOccurred: true
+        }
+      })).toEqual(
+      Object.assign({}, INITIAL_STATE, {
+        reviewFormState: {
+          disabled: undefined,
+          errorOccurred: true
+        }
+      })
+  );
 });
 
 it(`Should make a correct API call to /hotels`, () => {
@@ -252,7 +221,7 @@ it(`Should make a correct API call to /comments/:hotelId (send review)`, () => {
 
   return sendReview(dispatch, jest.fn(), api)
     .then(() => {
-      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenCalledTimes(2); // send review and then get review list
     });
 });
 

@@ -17,7 +17,9 @@ exports[`ReviewFormComponent correct renders 1`] = `
     className="reviews__rating-form form__rating"
   >
     <input
+      checked={false}
       className="form__rating-input visually-hidden"
+      disabled={false}
       id="stars5"
       name="rating"
       onChange={[Function]}
@@ -45,7 +47,9 @@ exports[`ReviewFormComponent correct renders 1`] = `
       </svg>
     </label>
     <input
+      checked={false}
       className="form__rating-input visually-hidden"
+      disabled={false}
       id="stars4"
       name="rating"
       onChange={[Function]}
@@ -73,7 +77,9 @@ exports[`ReviewFormComponent correct renders 1`] = `
       </svg>
     </label>
     <input
+      checked={false}
       className="form__rating-input visually-hidden"
+      disabled={false}
       id="stars3"
       name="rating"
       onChange={[Function]}
@@ -101,7 +107,9 @@ exports[`ReviewFormComponent correct renders 1`] = `
       </svg>
     </label>
     <input
+      checked={false}
       className="form__rating-input visually-hidden"
+      disabled={false}
       id="stars2"
       name="rating"
       onChange={[Function]}
@@ -129,7 +137,9 @@ exports[`ReviewFormComponent correct renders 1`] = `
       </svg>
     </label>
     <input
+      checked={false}
       className="form__rating-input visually-hidden"
+      disabled={false}
       id="stars1"
       name="rating"
       onChange={[Function]}
@@ -159,10 +169,12 @@ exports[`ReviewFormComponent correct renders 1`] = `
   </div>
   <textarea
     className="reviews__textarea form__textarea"
+    disabled={false}
     id="review"
     name="review"
     onChange={[Function]}
     placeholder="Tell how was your stay, what you like and what can be improved"
+    required={true}
   />
   <div
     className="reviews__button-wrapper"
@@ -188,11 +200,13 @@ exports[`ReviewFormComponent correct renders 1`] = `
     </p>
     <button
       className="reviews__submit form__submit button"
-      disabled=""
+      disabled={true}
+      title="Please, rate this hotel and describe your stay with at least 50 characters and max - 300!"
       type="submit"
     >
       Submit
     </button>
   </div>
+  
 </form>
 `;

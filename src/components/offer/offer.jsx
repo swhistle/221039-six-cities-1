@@ -38,7 +38,7 @@ export class OfferComponent extends React.Component {
   }
 
   render() {
-    const {offer, nearPlaces, onSubmitReviewFormHandler, userIsLoggedIn, reviewList, currentOfferIsFavorite, addToBookmarks, favoriteOffers} = this.props;
+    const {offer, nearPlaces, onSubmitReviewFormHandler, userIsLoggedIn, reviewList, currentOfferIsFavorite, addToBookmarks, favoriteOffers, reviewFormState} = this.props;
 
     if (offer && nearPlaces) {
       const nearPlacesCoordinates = nearPlaces.map((place) => [place.location.latitude, place.location.longitude]);
@@ -129,7 +129,7 @@ export class OfferComponent extends React.Component {
               <ReviewListComponent reviewList={reviewList}/>
               {
                 userIsLoggedIn ?
-                  <ReviewForm hotelId={offer.id} onSubmitHandler={onSubmitReviewFormHandler} userIsLoggedIn={userIsLoggedIn}/> :
+                  <ReviewForm hotelId={offer.id} onSubmitHandler={onSubmitReviewFormHandler} userIsLoggedIn={userIsLoggedIn} reviewFormState={reviewFormState}/> :
                   <div>
                     <span>Only registered users can write reviews. </span>
                     <Link to="/login">
@@ -181,4 +181,5 @@ OfferComponent.propTypes = {
   addToBookmarks: PropTypes.func,
   currentOfferIsFavorite: PropTypes.bool,
   favoriteOffers: PropTypes.array,
+  reviewFormState: PropTypes.object
 };

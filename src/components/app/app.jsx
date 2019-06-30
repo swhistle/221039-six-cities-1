@@ -64,7 +64,7 @@ class App extends React.PureComponent {
   }
 
   render() {
-    const {offers, currentCity, user, sortOffersBy, selectedOfferId, reviewList, favoriteOffersList} = this.props;
+    const {offers, currentCity, user, sortOffersBy, selectedOfferId, reviewList, favoriteOffersList, reviewFormState} = this.props;
     const userIsLoggedIn = !!user && !!user.avatar_url && !!user.id;
 
     return <Switch>
@@ -179,7 +179,8 @@ class App extends React.PureComponent {
             loadReviewList={this._loadReviewList}
             addToBookmarks={this._addToBookmarks}
             currentOfferIsFavorite={currentOfferIsFavorite}
-            favoriteOffers={favoriteOffersList}/>;
+            favoriteOffers={favoriteOffersList}
+            reviewFormState={reviewFormState}/>;
         }
 
         return null;
@@ -195,7 +196,8 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   sortOffersBy: state.sortOffersBy,
   selectedOfferId: state.selectedOfferId,
   reviewList: state.reviewList,
-  favoriteOffersList: state.favoriteOffersList
+  favoriteOffersList: state.favoriteOffersList,
+  reviewFormState: state.reviewFormState
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -216,6 +218,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   sendReview: (review, hotelId) => {
     dispatch(Operations.sendReview(review, hotelId));
+    dispatch(ActionCreators[Actions.DisableReviewForm](true));
   },
   loadReviewList: (hotelId) => {
     dispatch(Operations.loadReviewList(hotelId));
@@ -245,7 +248,8 @@ App.propTypes = {
   changeCurrentOffer: PropTypes.func,
   reviewList: PropTypes.array,
   addHotelInFavorites: PropTypes.func,
-  favoriteOffersList: PropTypes.array
+  favoriteOffersList: PropTypes.array,
+  reviewFormState: PropTypes.object
 };
 
 export {App};
